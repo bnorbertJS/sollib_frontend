@@ -12,6 +12,8 @@ class Header extends Component {
     }
     
     render() {
+        const { isAuthenticated } = this.props.auth;
+
         return (
             <div>
                 <Navbar />
@@ -24,9 +26,11 @@ class Header extends Component {
                             <div className="col-8">
                                 <p className="lead">Release your inner desire !</p>
                             </div>
-                            <div className="col-4">
-                                <Login userLoginRequest={this.props.userLoginRequest}/>
-                            </div>
+                            {!isAuthenticated &&
+                                <div className="col-4">
+                                    <Login userLoginRequest={this.props.userLoginRequest}/>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
@@ -36,8 +40,11 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-    userLoginRequest: PropTypes.func.isRequired
+    userLoginRequest: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired
 }
 
-export default connect(null,{ userLoginRequest })(Header);
+const mapStateToProps = ( state ) => ({ auth: state.authReducer });
+
+export default connect(mapStateToProps,{ userLoginRequest })(Header);
 

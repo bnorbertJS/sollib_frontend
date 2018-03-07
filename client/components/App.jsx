@@ -3,6 +3,8 @@ import Login from './Login.jsx';
 import Header from './Header.jsx';
 import Sections from './Sections.jsx';
 import Footer from './Footer.jsx';
+import UserProfile from './UserProfile.jsx';
+
 
 export default class App extends React.Component {
   constructor(props) {
@@ -11,11 +13,11 @@ export default class App extends React.Component {
   
   render() {
     return (
-      <div>
-        <Header />
-        <Sections />
-        <Footer />
-      </div>
+        <div>
+          <Header />
+          <Sections />
+          <Footer />
+        </div>
       );
   }
 }
