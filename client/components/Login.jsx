@@ -20,7 +20,6 @@ class Login extends Component {
     onSubmit(e){
         e.preventDefault();
         this.props.userLoginRequest(this.state);
-        debugger;
     }
 
     render() {

@@ -12,6 +12,8 @@
     "axios": "^0.18.0",
     "bootstrap": "^4.0.0",
     "html-webpack-plugin": "webpack-contrib/html-webpack-plugin",
+    "jwt-decode": "^2.2.0",
+    "lodash": "^4.17.5",
     "path": "^0.12.7",
     "prop-types": "^15.6.1",
     "react": "^16.2.0",

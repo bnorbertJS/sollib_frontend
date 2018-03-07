@@ -7,9 +7,6 @@ import Footer from './Footer.jsx';
 export default class App extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      isLoggedIn: localStorage.getItem("x-sollib-token") ? true : false
-    }
   }
   
   render() {
