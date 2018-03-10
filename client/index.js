@@ -9,7 +9,8 @@ import rootReducer from './rootReducer';
 import setAuthToken from './utils/setAuthToken';
 import jwt_decode from 'jwt-decode';
 import { setLoggedInUser } from './actions/LoginActions';
-import { BrowserRouter, Route, Link, Redirect } from 'react-router-dom';
+import { BrowserRouter, browserHistory, Route } from 'react-router-dom';
+import routes from './routes';
 
 const store = createStore(
     rootReducer,
@@ -28,11 +29,8 @@ if(token){
 
 ReactDOM.render(
     <Provider store={store}>
-    <BrowserRouter>
-    <div>
-        <Route path="/" component={ App } />
-        <Route path="/my_profile" component={ UserProfile } />
-    </div>
-    </BrowserRouter>
+        <BrowserRouter>
+                <Route path="/" component={App} />
+        </BrowserRouter>
     </Provider>,
     document.getElementById("root"));

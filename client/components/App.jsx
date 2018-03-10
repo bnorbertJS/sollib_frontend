@@ -1,9 +1,7 @@
 import React from 'react';
-import Login from './Login.jsx';
-import Header from './Header.jsx';
-import Sections from './Sections.jsx';
-import Footer from './Footer.jsx';
+import LandingPage from './LandingPage.jsx';
 import UserProfile from './UserProfile.jsx';
+import { Switch, Route } from 'react-router-dom'
 
 
 export default class App extends React.Component {
@@ -13,11 +11,10 @@ export default class App extends React.Component {
   
   render() {
     return (
-        <div>
-          <Header />
-          <Sections />
-          <Footer />
-        </div>
+      <Switch>
+        <Route exact path='/' component={LandingPage}/>
+        <Route exact path='/my_profile' component={UserProfile}/>
+      </Switch>
       );
   }
 }

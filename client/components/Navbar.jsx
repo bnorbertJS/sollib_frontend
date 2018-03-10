@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { BrowserRouter, Route, Link, Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 class Navbar extends Component {
     constructor(props) {
@@ -11,7 +11,7 @@ class Navbar extends Component {
     }
     
     onClickMe(){
-        debugger;
+        this.props.history.push("/my_profile");
     }
 
     render() {
@@ -25,7 +25,7 @@ class Navbar extends Component {
                 <a className="navbar-brand my-2 my-sm-0"></a>
                     <form className="form-inline">
                         <button className="btn btn-outline-success my-2 my-sm-0" onClick={this.onClickMe}>
-                            <Link to="/my_profile">Me</Link>
+                            Me
                         </button>
                     </form>
                 </nav>
@@ -42,4 +42,4 @@ Navbar.propTypes = {
 
 const mapStateToProps = ( state ) => ({ auth: state.authReducer });
 
-export default connect(mapStateToProps)(Navbar);
+export default withRouter(connect(mapStateToProps)(Navbar));
