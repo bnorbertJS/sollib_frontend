@@ -16,8 +16,22 @@ class UserProfile extends Component {
 
     render() {
         return (
-            <div>
-               {this.props.user.name}
+            <div className="userprofile">
+                <div className="d-flex justify-content-center">
+                    <div className="mx-auto d-block" style={{fontSize: 5 + 'em', color: 'grey', margin: 0.2 + 'em'}}>
+                        <i className="fas fa-smile"></i>
+                    </div>
+                </div>
+                <div className="d-flex justify-content-center">
+                    <div className="mx-auto d-block" style={{fontSize: 3 + 'em'}}>
+                            {this.props.user.username}
+                    </div>
+                </div>
+                <div className="d-flex justify-content-center">
+                    <div className="mx-auto d-block">
+                            Github | Linkedin | Instagram
+                    </div>
+                </div>
             </div>
         )
     }

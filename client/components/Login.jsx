@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 
 class Login extends Component {
     constructor(props){
         super(props);
         this.state = {
-            email: "",
+            authCred: "",
             pass: ""
         }
 
@@ -22,16 +23,21 @@ class Login extends Component {
         this.props.userLoginRequest(this.state);
     }
 
+    onPressRegister(e){
+        e.preventDefault();
+        this.props.history.push("/register");
+    }
+
     render() {
     return (
         <div className="login-form">
             <form onSubmit={this.onSubmit}>
                 <div className="form-group">
-                    <label htmlFor="exampleInputEmail1">Email</label>
-                    <input name="email" type="email" className="form-control"
+                    <label htmlFor="exampleInputEmail1">Username/Email</label>
+                    <input name="authCred" className="form-control"
                         onChange={this.onChange}
-                        value={this.state.email}
-                        placeholder="Enter email" />
+                        value={this.state.authCred}
+                        placeholder="Enter username/email" />
                 </div>
                 <div className="form-group">
                     <label htmlFor="exampleInputPassword1">Password</label>
@@ -40,7 +46,14 @@ class Login extends Component {
                         value={this.state.pass}
                         placeholder="Password" />
                 </div>
-                <button type="submit" className="btn btn-primary">Submit</button>
+                <div className="row">
+                    <div className="col">
+                        <button type="submit" className="btn btn-success">Login</button>
+                    </div>
+                    <div className="col">
+                        <button onClick={this.onPressRegister.bind(this)} className="btn btn-primary">Sign up</button>
+                    </div>
+                </div>  
             </form>
         </div>
     )
@@ -51,4 +64,4 @@ Login.propTypes = {
     userLoginRequest: PropTypes.func.isRequired
 };
 
-export default Login;
+export default withRouter(Login);

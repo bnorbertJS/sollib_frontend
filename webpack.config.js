@@ -16,7 +16,10 @@ module.exports = {
     ]
   },
   devServer: {
-    historyApiFallback: true,
+    port: 3000,
+    proxy: {
+      "/api": "http://[::1]:8000"
+    }
   },
   //plugins: [new HtmlWebpackPlugin({template: './index.html'})]
 };

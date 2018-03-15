@@ -21,14 +21,13 @@ class Navbar extends Component {
             
             <div>
                {isAuthenticated &&
-                <nav className="navbar navbar-dark bg-dark"> 
-                <a className="navbar-brand my-2 my-sm-0"></a>
-                    <form className="form-inline">
-                        <button className="btn btn-outline-success my-2 my-sm-0" onClick={this.onClickMe}>
-                            Me
-                        </button>
-                    </form>
-                </nav>
+                    <nav className="navbar navbar-light bg-light">
+                    <a className="navbar-brand" href="#">Solution Library</a>
+                   
+                    
+                    <button onClick={this.onClickMe} className="transparent-btn">{user.username}</button>
+                          
+                  </nav>
                 }
             </div>
             

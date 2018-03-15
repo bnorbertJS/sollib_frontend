@@ -9,18 +9,15 @@ export function setUserDetails(user){
 
 export function  userDetailRequest(){
     return dispatch => {
-        /*return axios({
-            method: 'get',
-            url: 'http://localhost:8000/api/v1/me',
+        return axios({
+            url: '/api/v1/profile/' + localStorage.getItem("sollib-username"),
             headers: {
                 'x-sollib-token': localStorage.getItem("x-sollib-token")
             }
         })
         .then(user => {
-            dispatch(setUserDetails(user));
+            dispatch(setUserDetails(user.data.user));
         })
-        .catch(err => { debugger; })*/
-
-        dispatch(setUserDetails({name: "Norbert"}))
+        .catch(err => { debugger; })
     }
 }
