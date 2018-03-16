@@ -15,6 +15,7 @@ class UserProfile extends Component {
         }
 
         this.onClickAddSolution = this.onClickAddSolution.bind(this);
+        this.onClickEditProfile = this.onClickEditProfile.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -22,7 +23,11 @@ class UserProfile extends Component {
     }
 
     onClickAddSolution(e){
-        console.log(this.props.user.solutions.length)
+        this.props.history.push("/new_solution");
+    }
+
+    onClickEditProfile(e){
+        debugger;
     }
 
     render() {
@@ -48,12 +53,14 @@ class UserProfile extends Component {
                 {
                     this.props.user.solutions.map((item, idx) => {
                         return (
-                            <div className="card" key={idx}>
+                            <div className="card mx-auto no-padding-top" key={idx}>
                                 <img className="card-img-top" src="https://source.unsplash.com/random" alt="Card image cap" />
                                 <div className="card-body">
                                 <h5 className="card-title">{item.name}</h5>
                                 <p className="card-text">{item.desc}</p>
-                                <p className="card-text"><small className="text-muted">{item.updated_at}</small></p>
+                                </div>
+                                <div className="card-footer text-muted">
+                                <small className="text-muted">{item.updated_at}</small>
                                 </div>
                             </div>
                         )
@@ -63,16 +70,11 @@ class UserProfile extends Component {
             </div>
         )
 
-        /*const solutionTemplate = (
-            <div className="d-flex justify-content-center align-items-center" style={{backgroundColor: 'lightgrey', height: 15 + 'rem'}}>
-                <ul>
-                    <li></li>
-                </ul>
-            </div>
-        )*/
 
         return (
             <div className="userprofile">
+                <span className="fas fa-edit edit-icon" onClick={this.onClickEditProfile}
+                        style={{opacity: 0.5, cursor: 'pointer', fontSize: 30 + 'px', color: 'grey'}}></span>
                 <div className="d-flex justify-content-center">
                     <div className="mx-auto d-block" style={{fontSize: 5 + 'em', color: 'grey', margin: 0.2 + 'em'}}>
                         <i className="fas fa-smile"></i>
@@ -88,8 +90,20 @@ class UserProfile extends Component {
                             Github | Linkedin | Instagram
                     </div>
                 </div>
-                
-                {SolutionTemplate}
+
+                <div>
+                    <nav className="navbar navbar-light bg-light">
+                        <form className="form-inline my-2 my-lg-0">
+                            <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
+                            <button className="btn btn-outline-dark my-2 my-sm-0">Search</button>
+                        </form>
+
+                        <form className="form-inline my-2 my-lg-0">
+                            <button className="btn btn-outline-dark my-2 my-sm-0" onClick={this.onClickAddSolution}>Create</button>
+                        </form>
+                    </nav>
+                    {SolutionTemplate}
+                </div> 
             </div>
         )
     }

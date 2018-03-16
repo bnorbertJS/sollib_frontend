@@ -18,22 +18,23 @@ export function userDetailRequest(){
         .then(user => {
             dispatch(setUserDetails(user.data.user));
         })
-        .catch(err => { debugger; })
+        .catch(err => { console.log("error happened. UserDetailAction.js") })
     }
 }
 
-export function addSolutionRequest(){
+export function addSolutionRequest(sol){
     return dispatch => {
         return axios({
             method: 'post',
             url: '/api/v1/new_solution',
             headers: {
                 'x-sollib-token': localStorage.getItem("x-sollib-token")
-            }
+            },
+            data: sol
         })
         .then(sol => {
-            debugger;
+            console.log("successfully created")
         })
-        .catch(err => console.log(err));
+        .catch(err => console.log(err + "UserDetailAction.js"));
     }
 } 
