@@ -10,3 +10,26 @@
     overflow: hidden;
     outline:none;
 }
+
+.card-deck{
+    margin: 0;
+}
+
+@media (min-width:34em) {
+    .card-deck > .card
+    {
+        width: 29%;
+        flex-wrap: wrap;
+        flex: initial;
+        padding: 0;
+        margin: 1rem;
+    }
+
+    .card-deck > .card > .card-body{
+        height: 150px;
+    }
+
+    .card-deck > .card > .card-img-top{
+        height: 200px;
+    }
+}

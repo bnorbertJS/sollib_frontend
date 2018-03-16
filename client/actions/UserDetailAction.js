@@ -7,7 +7,7 @@ export function setUserDetails(user){
     }
 }
 
-export function  userDetailRequest(){
+export function userDetailRequest(){
     return dispatch => {
         return axios({
             url: '/api/v1/profile/' + localStorage.getItem("sollib-username"),
@@ -21,3 +21,19 @@ export function  userDetailRequest(){
         .catch(err => { debugger; })
     }
 }
+
+export function addSolutionRequest(){
+    return dispatch => {
+        return axios({
+            method: 'post',
+            url: '/api/v1/new_solution',
+            headers: {
+                'x-sollib-token': localStorage.getItem("x-sollib-token")
+            }
+        })
+        .then(sol => {
+            debugger;
+        })
+        .catch(err => console.log(err));
+    }
+} 
