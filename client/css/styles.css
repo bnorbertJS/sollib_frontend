@@ -2,6 +2,10 @@
     height: 100vh;
 }
 
+html, body{
+    height: 100vh;
+}
+
 .transparent-btn{
     background-color: Transparent;
     background-repeat:no-repeat;
@@ -14,6 +18,7 @@
 .card-deck{
     margin: 0;
     padding-top: 0;
+    margin-bottom: 10px;
 }
 
 .edit-icon{
@@ -22,23 +27,17 @@
     right: 10px;
 }
 
-@media (min-width:10em) {
-    .card-deck > .card
-    {
-        width: 33%;
-        flex-wrap: wrap;
-        flex: initial;
-        padding: 0;
-        margin-bottom: 20px;
-        margin-left: 20px;
-        margin-right: 20px;
-    }
+.card { width: 400px;}
 
-    .card-deck > .card > .card-body{
-        height: 100px;
-    }
 
-    .card-deck > .card > .card-img-top{
-        height: 150px;
-    }
+
+@media only screen
+and (max-width : 480px) {
+.card { width: 200px;}
+}
+
+
+@media only screen
+and (max-width : 767px) {
+.card { width: 200px;}
 }

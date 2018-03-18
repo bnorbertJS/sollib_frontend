@@ -19,7 +19,7 @@ class UserProfile extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({ solutionsLength: nextProps.user.solutions.length })
+        this.setState({ solutionsLength: nextProps.user.solutions.length, user: nextProps.user })
     }
 
     onClickAddSolution(e){
@@ -27,7 +27,7 @@ class UserProfile extends Component {
     }
 
     onClickEditProfile(e){
-        debugger;
+        this.props.history.push("/edit_profile");
     }
 
     render() {
@@ -48,38 +48,49 @@ class UserProfile extends Component {
         ) :
 
         (
-            <div className="d-flex justify-content-center" >
-            <div className="card-deck">
+                <div className="row card-deck">
                 {
                     this.props.user.solutions.map((item, idx) => {
                         return (
-                            <div className="card mx-auto no-padding-top" key={idx}>
-                                <img className="card-img-top" src="https://source.unsplash.com/random" alt="Card image cap" />
-                                <div className="card-body">
-                                <h5 className="card-title">{item.name}</h5>
-                                <p className="card-text">{item.desc}</p>
-                                </div>
-                                <div className="card-footer text-muted">
-                                <small className="text-muted">{item.updated_at}</small>
-                                </div>
-                            </div>
+                            <div className="col" key={idx}>
+                            <div className="card medium mx-auto d-block">
+        <div className="card-image">
+          <img src="https://source.unsplash.com/random"/>
+          <span className="card-title">{item.name}</span>
+          
+        </div>
+        <div className="card-content">
+          <p>{item.desc}</p>
+        </div>
+      </div>
+      </div>
+
+                            
                         )
                     })
                 }
-            </div>
+            
             </div>
         )
-
+        const picUrl = this.state.user.profile_pic === undefined || this.state.user.profile_pic === null ? "user.png" : this.state.user.profile_pic
+        const ProfilePicTemplate =
+        (
+            <img src={"http://localhost:8000/" + picUrl}
+                style={{width: 2.5 + "em", height: 2.5 + "em", borderRadius: 50 + "%"}}/>
+        )
 
         return (
             <div className="userprofile">
-                <span className="fas fa-edit edit-icon" onClick={this.onClickEditProfile}
-                        style={{opacity: 0.5, cursor: 'pointer', fontSize: 30 + 'px', color: 'grey'}}></span>
+                <button className="transparent-btn" onClick={this.onClickEditProfile}>
+                    <span className="fas fa-edit edit-icon"
+                            style={{opacity: 0.5, cursor: 'pointer', fontSize: 30 + 'px', color: 'grey'}}></span>
+                </button>
                 <div className="d-flex justify-content-center">
                     <div className="mx-auto d-block" style={{fontSize: 5 + 'em', color: 'grey', margin: 0.2 + 'em'}}>
-                        <i className="fas fa-smile"></i>
+                        {ProfilePicTemplate}
                     </div>
                 </div>
+                
                 <div className="d-flex justify-content-center">
                     <div className="mx-auto d-block" style={{fontSize: 3 + 'em'}}>
                             {this.props.user.username}
@@ -95,7 +106,6 @@ class UserProfile extends Component {
                     <nav className="navbar navbar-light bg-light">
                         <form className="form-inline my-2 my-lg-0">
                             <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-                            <button className="btn btn-outline-dark my-2 my-sm-0">Search</button>
                         </form>
 
                         <form className="form-inline my-2 my-lg-0">

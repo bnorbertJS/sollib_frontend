@@ -33,14 +33,12 @@ class Login extends Component {
         <div className="login-form">
             <form onSubmit={this.onSubmit}>
                 <div className="form-group">
-                    <label htmlFor="exampleInputEmail1">Username/Email</label>
                     <input name="authCred" className="form-control"
                         onChange={this.onChange}
                         value={this.state.authCred}
                         placeholder="Enter username/email" />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="exampleInputPassword1">Password</label>
                     <input name="pass" type="password" className="form-control"
                         onChange={this.onChange}
                         value={this.state.pass}

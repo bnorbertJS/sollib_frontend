@@ -1,9 +1,8 @@
 import axios from 'axios';
 
 export default function setAuthToken(token){
-    debugger;
     if(token){
-        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        axios.defaults.headers.common["x-sollib-token"] = token;
     }else{
         delete axios.defaults.headers.common["Authorization"];
     }
