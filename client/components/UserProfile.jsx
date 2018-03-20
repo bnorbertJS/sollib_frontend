@@ -34,17 +34,12 @@ class UserProfile extends Component {
         const solutionExists = this.state.solutionsLength === 0 ? false : true;
 
         const SolutionTemplate = !solutionExists ? (
-            <div className="d-flex justify-content-center align-items-center flex-column" 
-                style={{backgroundColor: 'lightgrey', height: 15 + 'rem'}}>
+            <div className="center-align" style={{paddingTop: 5 + '%'}}>
                 You don't have any solutions yet.
                 <div>
-                    <button onClick={this.onClickAddSolution} className="transparent-btn">
-                    <span className="fas fa-plus-circle" 
-                        style={{cursor: 'pointer', fontSize: 3 + 'em', color: 'white', margin: 0.4 + 'em'}}></span>
-                    </button>
-                    
+                    <i className="large material-icons">sentiment_dissatisfied</i>
                 </div>
-            </div> 
+            </div>
         ) :
 
         (
@@ -80,10 +75,10 @@ class UserProfile extends Component {
         )
 
         return (
-            <div className="userprofile">
+            <div className="userprofile red lighten-2" style={{height: 100 + 'vh'}}>
                 <button className="transparent-btn" onClick={this.onClickEditProfile}>
                     <span className="fas fa-edit edit-icon"
-                            style={{opacity: 0.5, cursor: 'pointer', fontSize: 30 + 'px', color: 'grey'}}></span>
+                            style={{opacity: 0.5, cursor: 'pointer', fontSize: 30 + 'px', color: 'white'}}></span>
                 </button>
                 <div className="d-flex justify-content-center">
                     <div className="mx-auto d-block" style={{fontSize: 5 + 'em', color: 'grey', margin: 0.2 + 'em'}}>
