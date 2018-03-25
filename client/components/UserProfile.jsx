@@ -16,6 +16,7 @@ class UserProfile extends Component {
 
         this.onClickAddSolution = this.onClickAddSolution.bind(this);
         this.onClickEditProfile = this.onClickEditProfile.bind(this);
+        this.onClickSolutionDetails = this.onClickSolutionDetails.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -24,6 +25,11 @@ class UserProfile extends Component {
 
     onClickAddSolution(e){
         this.props.history.push("/new_solution");
+    }
+
+    onClickSolutionDetails(e){
+        debugger;
+        this.props.history.push("/solution_details/" + e.currentTarget.dataset.id);
     }
 
     onClickEditProfile(e){
@@ -43,22 +49,26 @@ class UserProfile extends Component {
         ) :
 
         (
-                <div className="row card-deck">
+                <div className="row">
                 {
                     this.props.user.solutions.map((item, idx) => {
                         return (
                             <div className="col" key={idx}>
-                            <div className="card medium mx-auto d-block">
-        <div className="card-image">
-          <img src="https://source.unsplash.com/random"/>
-          <span className="card-title">{item.name}</span>
-          
-        </div>
-        <div className="card-content">
-          <p>{item.desc}</p>
-        </div>
-      </div>
-      </div>
+                            <div className="card medium">
+                                <div className="card-image">
+                                    <img src={"http://localhost:8000/" + item.pic_url}/>
+                                    <span className="card-title">{item.name}</span>
+                                    
+                                </div>
+                                <div className="card-content">
+                                <p>{item.desc}</p>
+                                </div>
+                                <div className="card-action">
+                                    <a href="#">Github</a>
+                                    <a style={{cursor: "pointer"}} onClick={this.onClickSolutionDetails} data-id={item.id}>Details</a>
+                                </div>
+                            </div>
+                            </div>
 
                             
                         )
@@ -73,13 +83,21 @@ class UserProfile extends Component {
             <img src={"http://localhost:8000/" + picUrl}
                 style={{width: 2.5 + "em", height: 2.5 + "em", borderRadius: 50 + "%"}}/>
         )
+        
+        const github = this.state.user.github ? (<a href={this.state.user.github}><i style={{height: 2.5 + "em", width: 2.5 + "em", padding: 0.5 + "em", color: "#212529"}} className="fab fa-github"></i></a>) : (<div></div>);
+        const linkedin = this.state.user.linkedin ? (<a href={this.state.user.linkedin}><i style={{height: 2.5 + "em", width: 2.5 + "em", padding: 0.5 + "em", color: "#212529"}} className="fab fa-linkedin"></i></a>) : (<div></div>);
+        const webpage = this.state.user.webpage ? (<a href={this.state.user.webpage}><i style={{height: 2.5 + "em", width: 2.5 + "em", padding: 0.5 + "em", color: "#212529"}} className="fa fa-link"></i></a>) : (<div></div>);
+
+        const self_intro = this.state.user.self_intro ? (<div className="self-intro">{this.state.user.self_intro}</div>) : (<div></div>);
 
         return (
-            <div className="userprofile red lighten-2" style={{height: 100 + 'vh'}}>
-                <button className="transparent-btn" onClick={this.onClickEditProfile}>
-                    <span className="fas fa-edit edit-icon"
-                            style={{opacity: 0.5, cursor: 'pointer', fontSize: 30 + 'px', color: 'white'}}></span>
-                </button>
+            <div className="userprofile">
+            <div className="red lighten-2">
+                {self_intro}
+                
+                <a className="btn-floating btn-large red edit-icon" onClick={this.onClickEditProfile}>
+                    <i className="large material-icons">mode_edit</i>
+                </a>
                 <div className="d-flex justify-content-center">
                     <div className="mx-auto d-block" style={{fontSize: 5 + 'em', color: 'grey', margin: 0.2 + 'em'}}>
                         {ProfilePicTemplate}
@@ -92,11 +110,11 @@ class UserProfile extends Component {
                     </div>
                 </div>
                 <div className="d-flex justify-content-center">
-                    <div className="mx-auto d-block">
-                            Github | Linkedin | Instagram
+                    <div className="mx-auto">
+                            {github}{linkedin}{webpage}
                     </div>
                 </div>
-
+                </div>
                 <div>
                     <nav className="navbar navbar-light bg-light">
                         <form className="form-inline my-2 my-lg-0">
@@ -107,7 +125,9 @@ class UserProfile extends Component {
                             <button className="btn btn-outline-dark my-2 my-sm-0" onClick={this.onClickAddSolution}>Create</button>
                         </form>
                     </nav>
+                    <div className="solution-box">
                     {SolutionTemplate}
+                    </div>
                 </div> 
             </div>
         )

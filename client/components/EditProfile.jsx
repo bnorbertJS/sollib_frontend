@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
+import axios from 'axios';
+import Chips, { Chip } from 'react-chips';
 import {userDetailRequest} from '../actions/UserDetailAction';
 
 class EditProfile extends Component {
@@ -17,11 +19,11 @@ class EditProfile extends Component {
             webpage: "",
             self_intro: "",
             level: "",
-            experience: "",
-            skills: ""
+            experience: []
         }
         this.onChange = this.onChange.bind(this);
         this.onClickSaveProfile = this.onClickSaveProfile.bind(this);
+        this.onChangeProfilePicture = this.onChangeProfilePicture.bind(this);
     }
 
     onChange(e){
@@ -35,15 +37,56 @@ class EditProfile extends Component {
     componentWillReceiveProps(nextProps) {
         this.setState({profile_pic: "user.png"});
         this.setState(nextProps.user);
+        this.setState({experience: []});
     }
 
     onClickSaveProfile(){
+        axios({
+            method: 'post',
+            url: '/api/v1/profile_update',
+            headers: {
+                'x-sollib-token': localStorage.getItem("x-sollib-token")
+            },
+            data: this.state
+        })
+        .then((data) => {
+            const {user} = data.data;
+            this.setState({
+                lastname: user.lastname,
+                firstname: user.firstname,
+                github: user.github_url,
+                linkedin: user.linkedin_url,
+                webpage: user.homepage_url,
+                self_intro: user.self_intro,
+                level: user.level,
+                experience: user.experience,
+            });
+        })
+        .catch((err) => { console.log(err) });
+    }
+
+    onChangeProfilePicture(e){
+        const data = new FormData();
+        data.append("profileImg",e.target.files[0]);
         debugger;
+        axios({
+            method: 'post',
+            url: '/api/v1/profile_upload',
+            headers: {
+                'x-sollib-token': localStorage.getItem("x-sollib-token"),
+                'content-type': 'multipart/form-data'
+            },
+            data: data
+        })
+        .then((data) => {
+            //put new picture name to state
+            this.setState({ profile_pic: data.data.success });
+        })
+        .catch((err) => { console.log(err) });
     }
 
     render() {
         return (
-            
             <div className="editprofile-page">
                 <div className="d-flex justify-content-center">
                     <div className="mx-auto d-block" style={{fontSize: 2 + 'em', color: 'grey'}}>
@@ -59,14 +102,14 @@ class EditProfile extends Component {
                     <div>
                         <img className="mx-auto d-block" src={"http://localhost:8000/" + this.state.profile_pic}
                             style={{width: 5 + "em", height: 5 + "em", borderRadius: 50 + "%"}}/>
-                        <input name="profileImg" type="file" />
+                        <input name="profileImg" type="file" onChange={this.onChangeProfilePicture}/>
                     </div>
-                    
-                    <div className="file-path-wrapper">
+                    </div>
+                    {/*<div className="file-path-wrapper">
                         <input className="file-path validate" type="text" />
                     </div>
-                    </div>
-                    <button className="btn mx-auto d-block" type="submit">Change</button>
+                    
+                    <button className="btn mx-auto d-block" type="submit">Change</button> */}
                 </form>
                 
                 </div>
@@ -108,16 +151,15 @@ class EditProfile extends Component {
                     </div>
                     <div className="row">
                         <div className="input-field col s12">
-                            <textarea id="experience" name="experience" type="text" onChange={this.onChange}
-                                className="materialize-textarea" value={this.state.experience ? this.state.experience : ""}/>
-                            <label htmlFor="experience" className="active">Projects worth to mention (or other experience)</label>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="input-field col s12">
-                            <input id="skills" name="skills" type="text" value={this.state.skills ? this.state.skills : ""}
+                        {/*    <label htmlFor="experience" className="active">Tell us what you're good at !</label>
+                            <Chips
+                                value={this.state.experience}
+                                onChange={this.onChange}
+                                />
+
+                           <input id="experience" name="experience" type="text" value={this.state.experience ? this.state.experience : ""}
                                  className="validate" onChange={this.onChange}/>
-                            <label htmlFor="skills" className="active">Tell us what you're good at !</label>
+                <label htmlFor="experience" className="active">Tell us what you're good at !</label> */}
                         </div>
                     </div>
                     </form>

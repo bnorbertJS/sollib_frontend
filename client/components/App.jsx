@@ -4,6 +4,7 @@ import UserProfile from './UserProfile.jsx';
 import NewSolution from './NewSolution.jsx';
 import EditProfile from './EditProfile.jsx';
 import Register from './Register.jsx';
+import SolutionDetails from './SolutionDetails.jsx';
 import {HashRouter as Router, Switch, Route } from 'react-router-dom'
 import authProtector from '../utils/authProtector';
 
@@ -22,6 +23,7 @@ export default class App extends React.Component {
         <Route exact path='/register' component={Register} />
         <Route exact path='/new_solution' component={authProtector(NewSolution)}/>
         <Route exact path='/edit_profile' component={authProtector(EditProfile)}/>
+        <Route exact path='/solution_details/:id' component={SolutionDetails} />
       </Switch>
       </Router>
       );

@@ -17,7 +17,7 @@ class Header extends Component {
         return (
             <div>
                 <Navbar />
-                    <div className="jumbotron">
+                    <div className="jumbotron parallax">
                     <div className="container">
                         <h1 className="display-4">Solution Library</h1>
                     </div>

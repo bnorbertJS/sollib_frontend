@@ -33,7 +33,7 @@ export function addSolutionRequest(sol){
             data: sol
         })
         .then(sol => {
-            console.log("successfully created")
+            return sol;
         })
         .catch(err => console.log(err + "UserDetailAction.js"));
     }

@@ -21,11 +21,12 @@ class Navbar extends Component {
             
             <div>
                {isAuthenticated &&
-                    <nav className="navbar navbar-light">
+                <nav className="navbar navbar-light">
                     <a className="navbar-brand" href="#">Solution Library</a>
                    
                     <button onClick={this.onClickMe} className="transparent-btn">{user.username}</button>      
-                  </nav>
+                </nav>
+
                 }
             </div>
             
