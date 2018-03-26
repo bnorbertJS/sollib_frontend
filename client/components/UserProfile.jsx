@@ -28,7 +28,6 @@ class UserProfile extends Component {
     }
 
     onClickSolutionDetails(e){
-        debugger;
         this.props.history.push("/solution_details/" + e.currentTarget.dataset.id);
     }
 

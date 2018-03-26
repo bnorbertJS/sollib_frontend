@@ -39,6 +39,18 @@ html, body{
     color: red;
 }
 
+.headertext{
+    font-size: 36px;
+    margin: 1rem;
+}
+
+.headertext-small{
+    font-size: 24px;
+    margin-right: 0.6rem;
+    margin-bottom: 0.6rem;
+    margin-top: 0.6rem;
+}
+
 .solution-container{
     padding: 10px;
     margin-top: 20px;
