@@ -3,6 +3,8 @@ import LandingPage from './LandingPage.jsx';
 import UserProfile from './UserProfile.jsx';
 import NewSolution from './NewSolution.jsx';
 import EditProfile from './EditProfile.jsx';
+import RecruiterProfile from './RecruiterProfile.jsx';
+import Profile from './Profile.jsx';
 import Register from './Register.jsx';
 import SolutionDetails from './SolutionDetails.jsx';
 import {HashRouter as Router, Switch, Route } from 'react-router-dom'
@@ -19,10 +21,10 @@ export default class App extends React.Component {
       <Router>
       <Switch>
         <Route exact path='/' component={LandingPage}/>
-        <Route exact path='/my_profile' component={authProtector(UserProfile)}/>
+        <Route path='/my_profile' component={authProtector(Profile, ["user", "recruiter"])}/>
         <Route exact path='/register' component={Register} />
-        <Route exact path='/new_solution' component={authProtector(NewSolution)}/>
-        <Route exact path='/edit_profile' component={authProtector(EditProfile)}/>
+        <Route exact path='/new_solution' component={authProtector(NewSolution, ["user"])}/>
+        <Route exact path='/edit_profile' component={authProtector(EditProfile, ["user"])}/>
         <Route exact path='/solution_details/:id' component={SolutionDetails} />
       </Switch>
       </Router>

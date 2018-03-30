@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 
-export default function(ComposedComponent){
+export default function(ComposedComponent, roles){
     class AuthProtector extends Component {
-        componentWillMount(){
+        /*componentWillMount(){
             if(!this.props.isAuth){
                 this.props.history.push("/");
                 console.log("You cannot access this page. Try to log in first")
@@ -18,24 +18,30 @@ export default function(ComposedComponent){
                 this.props.history.push("/");
                 console.log("You cannot access this page. Try to log in first")
             }
-        }
+        }*/
 
         render() {
-            return (
-                <div>
-                    <ComposedComponent {...this.props} />
-                </div>
-            )
+            const { role } = this.props.user;
+            
+            if (this.props.isAuth && roles.includes(role)) {
+                return (<div>
+                            <ComposedComponent {...this.props} />
+                        </div>)
+            } else {
+                return <h1>403 Unauthorized !</h1>
+            }
         }
     }
 
     AuthProtector.propTypes = {
-        isAuth: PropTypes.bool.isRequired
+        isAuth: PropTypes.bool.isRequired,
+        user: PropTypes.object.isRequired
     }
 
     function mapStateToProps(state){
         return{
-            isAuth: state.authReducer.isAuthenticated
+            isAuth: state.authReducer.isAuthenticated,
+            user: state.authReducer.user
         };
     }
 
