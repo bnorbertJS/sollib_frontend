@@ -5,7 +5,7 @@ import { userDetailRequest } from '../actions/UserDetailAction';
 import RecruiterMatch from './RecruiterMatch.jsx';
 import RecruiterFindCandidates from './RecruiterFindCandidates.jsx';
 import RecruiterFavs from './RecruiterFavs.jsx';
-import {SideNav, SideNavItem, Button, Navbar, NavItem} from 'react-materialize';
+import {SideNav, SideNavItem, Button, Navbar, NavItem, Icon} from 'react-materialize';
 import { HashRouter as Router, Route, Link, Switch, NavLink } from "react-router-dom";
 
 class RecruiterProfile extends Component {
@@ -25,13 +25,22 @@ class RecruiterProfile extends Component {
 
     render() {
         const buttonToggleNav = (
-            <Button style={{borderRadius: 50 + "%", position: "absolute", right: 2 + "px", top: 2 + "px"}} 
-                large className='grey' icon='menu' />
+            <Button style={{position: "absolute", right: 2 + "px", top: 2 + "px"}} 
+                large className='red lighten-2' icon='menu' />
         )
         
         return (
                 <div>
-                    {buttonToggleNav}
+                    <nav className="navbar red lighten-2">
+                        <form className="form-inline my-2 my-lg-0">
+                            <Icon>chevron_left</Icon>
+                        </form>
+
+                        <form className="form-inline my-2 my-lg-0">
+                            {buttonToggleNav}
+                        </form>
+                    </nav>
+                    
                     <SideNav
                         trigger={buttonToggleNav}
                         options={{ closeOnClick: true, edge: "right", fixed: true }}
