@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
-class RecruiterFavs extends Component {
+class UserMessages extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            favs: [],
+            contacts: [],
             isloading: true,
             selectedFav: false,
             selectedFavObj: null,
@@ -28,13 +28,13 @@ class RecruiterFavs extends Component {
     componentWillMount(){
         axios({
             method: "get",
-            url: "/api/v1/get_favs",
+            url: "/api/v1/get_user_contacts",
             headers:{
                 'x-sollib-token': localStorage.getItem("x-sollib-token")
             }
         })
-        .then( favs => {
-            this.setState({ favs: favs.data.favList, isloading: false })
+        .then( contacts => {
+            this.setState({ contacts: contacts.data.contactList, isloading: false })
         })
     }
 
@@ -51,7 +51,6 @@ class RecruiterFavs extends Component {
         })
         .then( user => {
             const { id } = user.data.user;
-            console.log(id)
             this.setState({
                 selectedFav: true,
                 selectedFavObj: user.data.user
@@ -96,27 +95,27 @@ class RecruiterFavs extends Component {
     
     render() {
         const favListComponent = (
-            <div>
+            <div className="sollib-box">
                 <Collection header="Contacts" className="chat-list">
                 <div style={{height: 84 + "vh", overflowY: "auto"}}>
                 {
-                    this.state.favs.map((fav, idx) => {
+                    this.state.contacts.map((contact, idx) => {
                     return (
                         <CollectionItem className="contact-item"
                             onClick={this.onClickChatPartner} key={idx}
                             style={{padding: 0, border: "none", cursor: "pointer"}}>
                             <Row className="valign-wrapper left-aligned">
-                                <Col s={3} data-username={fav.username}>
+                                <Col s={3} data-username={contact.username}>
                                     <img style={{height: 2 + "rem", width: 2 + "rem"}} 
-                                        src={fav.profile_pic ? 
-                                                    `http://localhost:8000/${fav.profile_pic}`
+                                        src={contact.profile_pic ? 
+                                                    `http://localhost:8000/${contact.profile_pic}`
                                                     : "http://localhost:8000/user.png"} alt="avatar" className="circle" />
                                 </Col>
-                                <Col s={9} data-username={fav.username}>
-                                    {fav.username}<br />
-                                    {fav.email}
+                                <Col s={9} data-username={contact.username}>
+                                    {contact.firstname} {contact.lastname}<br />
+                                    <span style={{fontSize: 14 + "px"}}>{contact.company}</span>
                                 </Col>
-                            </Row>    
+                            </Row>
                         </CollectionItem>
                     )
                 })
@@ -156,6 +155,7 @@ class RecruiterFavs extends Component {
                                 </div>
                             :
                                 this.state.selectedFavObj !== null ?
+                                <div className="sollib-box">
                                     <Collection className="chat-messages"
                                         header={this.state.selectedFavObj.firstname}>
                                         <div id="chat-body" style={{height: 70 + "vh", overflowY: "auto"}}>
@@ -196,6 +196,7 @@ class RecruiterFavs extends Component {
                                             </div>
                                         </CollectionItem>
                                     </Collection>
+                                    </div>
                             :
                             
                             <div className="center-align">
@@ -203,6 +204,7 @@ class RecruiterFavs extends Component {
                                     <Preloader size='small'/>
                                 </div>
                             </div>
+                            
                         }
                         
                     </Col>
@@ -211,8 +213,7 @@ class RecruiterFavs extends Component {
         )
     }
 }
-
-RecruiterFavs.propTypes = {
+UserMessages.propTypes = {
     user: PropTypes.object.isRequired
 }
 
@@ -220,39 +221,4 @@ const mapStateToProps = ( state ) => ({
     user:  state.userDetailsReducer.user
 });
 
-export default connect(mapStateToProps,{  })(RecruiterFavs);
-
-{/*
-<div className="card red lighten-2 chatWindow">
-                                    <div className="card-content white-text" style={{height: 10 + "vh"}}>
-                                        <span className="card-title">Chat</span>
-                                    </div>
-                                    <div className="message-content white">
-                                        <div style={{padding: 10 + "px", 
-                                            width: 20 + "%", 
-                                            backgroundColor: "#90caf9", borderRadius: 10 + "%", whiteSpace: "pre-wrap"}}>
-                                           Hallo
-                                        </div>
-                                        <div className="right-align">
-                                            <Chip>Message1</Chip>
-                                        </div>
-                                        <div>
-                                            <Chip>Message1</Chip>
-                                        </div>
-                                    </div>
-                                    <div className="card-action message-input">
-                                        <div className="form-group">
-                                            <Row>
-                                                <Col s={10} style={{marginRight:0, paddingRight: 0}}>
-                                                    <textarea style={{resize: "none"}} placeholder="Type a message ..."
-                                                        className="form-control input-msg" rows="5"></textarea>
-                                                </Col>
-                                                <Col s={2} style={{marginLeft: 0, paddingLeft: 0}}>
-                                                    <Button style={{height: 100 + "%"}}>Send</Button>
-                                                </Col>
-                                            </Row>
-                                        </div>
-                                    </div>
-                                </div>
-                                className={(this.props.user.id === msg.from ? "goto-right" : "")}
-*/}
+export default connect(mapStateToProps,{  })(UserMessages);

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { userDetailRequest, addSolutionRequest } from '../actions/UserDetailAction';
+import {Chip} from 'react-materialize';
 
 class UserProfile extends Component {
     constructor(props) {
@@ -14,6 +15,7 @@ class UserProfile extends Component {
             solutionsLength: 0
         }
 
+        this.onClickMessages = this.onClickMessages.bind(this);
         this.onClickAddSolution = this.onClickAddSolution.bind(this);
         this.onClickEditProfile = this.onClickEditProfile.bind(this);
         this.onClickSolutionDetails = this.onClickSolutionDetails.bind(this);
@@ -35,6 +37,10 @@ class UserProfile extends Component {
         this.props.history.push("/edit_profile");
     }
 
+    onClickMessages(e){
+        this.props.history.push("/user_messages");
+    }
+
     render() {
         const solutionExists = this.state.solutionsLength === 0 ? false : true;
 
@@ -48,12 +54,12 @@ class UserProfile extends Component {
         ) :
 
         (
-                <div className="row">
+                <span style={{width: 280 + "px"}}>
                 {
                     this.props.user.solutions.map((item, idx) => {
                         return (
-                            <div className="col" key={idx}>
-                            <div className="card medium">
+                            <div key={idx} style={{width: 280 + "px", margin: 0}}>
+                            <div className="card small">
                                 <div className="card-image">
                                     <img src={"http://localhost:8000/" + item.pic_url}/>
                                     <span className="card-title">{item.name}</span>
@@ -73,14 +79,13 @@ class UserProfile extends Component {
                         )
                     })
                 }
-            
-            </div>
+                </span>
         )
         const picUrl = this.state.user.profile_pic === undefined || this.state.user.profile_pic === null ? "user.png" : this.state.user.profile_pic
         const ProfilePicTemplate =
         (
             <img src={"http://localhost:8000/" + picUrl}
-                style={{width: 2.5 + "em", height: 2.5 + "em", borderRadius: 50 + "%"}}/>
+                style={{width: 2 + "em", height: 2 + "em", borderRadius: 50 + "%"}}/>
         )
         
         const github = this.state.user.github ? (<a href={this.state.user.github}><i style={{height: 2.5 + "em", width: 2.5 + "em", padding: 0.5 + "em", color: "#212529"}} className="fab fa-github"></i></a>) : (<div></div>);
@@ -91,14 +96,15 @@ class UserProfile extends Component {
 
         return (
             <div className="userprofile">
-            <div className="red lighten-2">
-                {self_intro}
-                
+            <div className="red lighten-2 sollib-section" style={{marginBottom: 10 + "px"}}>
+                <a className="btn-floating btn-large red chat-icon" onClick={this.onClickMessages}>
+                    <i className="large material-icons">message</i>
+                </a>
                 <a className="btn-floating btn-large red edit-icon" onClick={this.onClickEditProfile}>
                     <i className="large material-icons">mode_edit</i>
                 </a>
                 <div className="d-flex justify-content-center">
-                    <div className="mx-auto d-block" style={{fontSize: 5 + 'em', color: 'grey', margin: 0.2 + 'em'}}>
+                    <div className="mx-auto d-block" style={{fontSize: 5 + 'em', color: 'grey', margin: 0.2 + 'em', marginBottom: 0}}>
                         {ProfilePicTemplate}
                     </div>
                 </div>
@@ -114,11 +120,29 @@ class UserProfile extends Component {
                     </div>
                 </div>
                 </div>
-                <div>
+                <div className="sollib-section">
                     <nav className="navbar navbar-light bg-light">
-                        <form className="form-inline my-2 my-lg-0">
-                            <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-                        </form>
+                        <h3 style={{color: "black", fontSize: 32 + "px"}}>Self intro</h3>
+                    </nav>
+                    <div className="selfintro-box">
+                    {self_intro}
+                    </div>
+                </div>
+                <div className="sollib-section">
+                    <nav className="navbar navbar-light bg-light">
+                        <h3 style={{color: "black", fontSize: 32 + "px"}}>TechStack</h3>
+                    </nav>
+                    <div className="skills-box">
+                        {this.state.user.skills &&
+                            this.state.user.skills.map((item,idx) =>{
+                                return <span className="chip skill-tag" key={idx}>{item.name}</span>
+                            })
+                        }
+                    </div>
+                </div>
+                <div className="sollib-section">
+                    <nav className="navbar navbar-light bg-light">
+                        <h3 style={{color: "black", fontSize: 32 + "px"}}>Solutions</h3>
 
                         <form className="form-inline my-2 my-lg-0">
                             <button className="btn btn-outline-dark my-2 my-sm-0" onClick={this.onClickAddSolution}>Create</button>

@@ -40,6 +40,18 @@ html, body{
     outline:none;
 }
 
+.userprofile{
+    height: 100vh;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.skill-tag{
+    color: white;
+    background-color: #E57373;
+    font-size: 20px;
+}
+
 .solution-toolbar-icon-delete{
     color: red;
 }
@@ -75,23 +87,48 @@ html, body{
 
 .edit-icon{
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 5px;
+    right: 11%;
 }
 
-.card { width: 280px; margin: 0 auto}
+.chat-icon{
+    position: absolute;
+    top: 65px;
+    right: 11%;
+}
+
+.cards-container {
+    column-break-inside: avoid;
+}
+
+.card {
+    display: inline-block;
+    overflow: visible;
+    width: 280px;
+}
 
 .self-intro{
     white-space: pre-wrap;
-    position: absolute;
-    left: 20px;
-    top: 60px;
-    color: white;
+    padding: 10px;
 }
 
 .solution-box{
-    width: 90%;
-    margin: 0 auto;
+    padding: 5px;
+}
+
+.skills-box{
+    padding: 10px;
+}
+
+.sollib-section{
+    margin-bottom: 10px;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
+    transition: box-shadow 83ms;
+}
+
+.sollib-box{
+    box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
+    transition: box-shadow 83ms;
 }
 
 
