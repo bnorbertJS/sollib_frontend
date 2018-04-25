@@ -7,7 +7,7 @@ export default class Login extends Component {
                 <div className="row" style={{marginLeft: 20 + "px", marginRight: 20 + "px"}}>
                     <div className="col s4">
                         <div className="center-align">
-                            <i className="medium material-icons" style={{color: "#ee6e73", margin: 10 + "px"}}>account_circle</i>
+                            <i className="medium material-icons" style={{color: "#6EC8C8", margin: 10 + "px"}}>account_circle</i>
                             <h4>Role Based</h4>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
                                 Vestibulum sit amet lacus convallis, bibendum dolor in, sollicitudin diam. 
@@ -19,7 +19,7 @@ export default class Login extends Component {
                     </div>
                     <div className="col s4">
                         <div className="center-align">
-                            <i className="medium material-icons" style={{color: "#ee6e73", margin: 10 + "px"}}>build</i>
+                            <i className="medium material-icons" style={{color: "#6EC8C8", margin: 10 + "px"}}>build</i>
                             <h4>Easy to use</h4>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
                                 Vestibulum sit amet lacus convallis, bibendum dolor in, sollicitudin diam. 
@@ -31,7 +31,7 @@ export default class Login extends Component {
                     </div>
                     <div className="col s4">
                         <div className="center-align">
-                            <i className="medium material-icons" style={{color: "#ee6e73", margin: 10 + "px"}}>beenhere</i>
+                            <i className="medium material-icons" style={{color: "#6EC8C8", margin: 10 + "px"}}>beenhere</i>
                             <h4>Effective</h4>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
                                 Vestibulum sit amet lacus convallis, bibendum dolor in, sollicitudin diam. 

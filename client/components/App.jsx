@@ -8,7 +8,7 @@ import Profile from './Profile.jsx';
 import UserMessages from './UserMessages.jsx';
 import Register from './Register.jsx';
 import SolutionDetails from './SolutionDetails.jsx';
-import {HashRouter as Router, Switch, Route } from 'react-router-dom'
+import {HashRouter as Router, Switch, Route } from 'react-router-dom';
 import authProtector from '../utils/authProtector';
 
 
@@ -22,7 +22,7 @@ export default class App extends React.Component {
       <Router>
       <Switch>
         <Route exact path='/' component={LandingPage}/>
-        <Route path='/my_profile' component={authProtector(Profile, ["user", "recruiter"])}/>
+        <Route path='/my_profile' component={authProtector(Profile, ["user", "recruiter", "admin"])}/>
         <Route exact path='/register' component={Register} />
         <Route exact path='/new_solution' component={authProtector(NewSolution, ["user"])}/>
         <Route exact path='/edit_profile' component={authProtector(EditProfile, ["user"])}/>

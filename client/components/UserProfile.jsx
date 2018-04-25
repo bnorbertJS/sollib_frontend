@@ -70,12 +70,11 @@ class UserProfile extends Component {
                                 </div>
                                 <div className="card-action">
                                     <a href="#">Github</a>
-                                    <a style={{cursor: "pointer"}} onClick={this.onClickSolutionDetails} data-id={item.id}>Details</a>
+                                    <a style={{cursor: "pointer"}}
+                                        onClick={this.onClickSolutionDetails} data-id={item.id}>Details</a>
                                 </div>
                             </div>
                             </div>
-
-                            
                         )
                     })
                 }
@@ -91,12 +90,11 @@ class UserProfile extends Component {
         const github = this.state.user.github ? (<a href={this.state.user.github}><i style={{height: 2.5 + "em", width: 2.5 + "em", padding: 0.5 + "em", color: "#212529"}} className="fab fa-github"></i></a>) : (<div></div>);
         const linkedin = this.state.user.linkedin ? (<a href={this.state.user.linkedin}><i style={{height: 2.5 + "em", width: 2.5 + "em", padding: 0.5 + "em", color: "#212529"}} className="fab fa-linkedin"></i></a>) : (<div></div>);
         const webpage = this.state.user.webpage ? (<a href={this.state.user.webpage}><i style={{height: 2.5 + "em", width: 2.5 + "em", padding: 0.5 + "em", color: "#212529"}} className="fa fa-link"></i></a>) : (<div></div>);
-
         const self_intro = this.state.user.self_intro ? (<div className="self-intro">{this.state.user.self_intro}</div>) : (<div></div>);
 
         return (
             <div className="userprofile">
-            <div className="red lighten-2 sollib-section" style={{marginBottom: 10 + "px"}}>
+            <div className="sollib-section" style={{marginBottom: 10 + "px", backgroundColor: "#6EC8C8"}}>
                 <a className="btn-floating btn-large red chat-icon" onClick={this.onClickMessages}>
                     <i className="large material-icons">message</i>
                 </a>

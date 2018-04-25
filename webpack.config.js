@@ -21,5 +21,4 @@ module.exports = {
       "/api": "http://[::1]:8000"
     }
   },
-  //plugins: [new HtmlWebpackPlugin({template: './index.html'})]
 };

@@ -2,13 +2,14 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import Chips, { Chip } from 'react-chips';
+import {Button, Row, Input, Icon, Tag, Chip, Col} from 'react-materialize';
 import {userDetailRequest} from '../actions/UserDetailAction';
 
 class EditProfile extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            currentSkill: "",
             username: "",
             profile_pic: "user.png",
             firstname: "",
@@ -19,8 +20,10 @@ class EditProfile extends Component {
             webpage: "",
             self_intro: "",
             level: "",
-            experience: []
+            skills: []
         }
+        this.addSkillsToState = this.addSkillsToState.bind(this);
+        this.onChangeSkills = this.onChangeSkills.bind(this);
         this.onChange = this.onChange.bind(this);
         this.onClickSaveProfile = this.onClickSaveProfile.bind(this);
         this.onChangeProfilePicture = this.onChangeProfilePicture.bind(this);
@@ -37,7 +40,6 @@ class EditProfile extends Component {
     componentWillReceiveProps(nextProps) {
         this.setState({profile_pic: "user.png"});
         this.setState(nextProps.user);
-        this.setState({experience: []});
     }
 
     onClickSaveProfile(){
@@ -59,7 +61,7 @@ class EditProfile extends Component {
                 webpage: user.homepage_url,
                 self_intro: user.self_intro,
                 level: user.level,
-                experience: user.experience,
+                skills: user.skills,
             });
         })
         .catch((err) => { console.log(err) });
@@ -83,6 +85,18 @@ class EditProfile extends Component {
             this.setState({ profile_pic: data.data.success });
         })
         .catch((err) => { console.log(err) });
+    }
+
+    onChangeSkills(e){
+        this.setState({ currentSkill: e.target.value })
+    }
+
+    addSkillsToState(e){
+        if (e.key === 'Enter' && e.target.value !== "") {
+            this.setState({
+                skills: [...this.state.skills, {name: e.target.value}],
+            })
+        }
     }
 
     render() {
@@ -149,22 +163,27 @@ class EditProfile extends Component {
                             <label htmlFor="self_intro" className="active">Tell us about yourself!</label>
                         </div>
                     </div>
-                    <div className="row">
-                        <div className="input-field col s12">
-                        {/*    <label htmlFor="experience" className="active">Tell us what you're good at !</label>
-                            <Chips
-                                value={this.state.experience}
-                                onChange={this.onChange}
-                                />
-
-                           <input id="experience" name="experience" type="text" value={this.state.experience ? this.state.experience : ""}
-                                 className="validate" onChange={this.onChange}/>
-                <label htmlFor="experience" className="active">Tell us what you're good at !</label> */}
-                        </div>
-                    </div>
+                    <Row>
+                        <Col s={6}>
+                        <label htmlFor="skills" style={{fontSize: 12 + "px"}}>Tell us what you'r good at!</label>
+                        <input id="skills" onChange={this.onChangeSkills} name="skills" onKeyPress={this.addSkillsToState}
+                            value={this.state.currentSkill} className="validate" />
+                        </Col>
+                        <Col s={6} style={{padding: 10 + "px"}}>
+                            {this.state.skills &&
+                                this.state.skills.map((skill,idx) =>{
+                                    return <Tag key={idx}>{skill.name}</Tag>
+                                })
+                            }
+                        </Col>
+                    </Row>
                     </form>
                 </div>
-                <button className="btn" onClick={this.onClickSaveProfile}>Save</button>
+                    <Row>
+                        <Col s={12}>
+                            <button className="btn red lighten-1" onClick={this.onClickSaveProfile}>Save</button>
+                        </Col>
+                    </Row>
                 </div>
                 </div>
                 </div>

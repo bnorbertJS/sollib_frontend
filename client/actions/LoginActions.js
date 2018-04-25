@@ -21,7 +21,6 @@ export function userLoginRequest(userData){
                 })
                 .then(token => {
                     localStorage.setItem("x-sollib-token",token.data.token);
-                    //setAuthToken(token.data.token);
                     let config = jwt_decode(token.data.token);
                     localStorage.setItem("sollib-username",config.username);
                     dispatch(setLoggedInUser(config));

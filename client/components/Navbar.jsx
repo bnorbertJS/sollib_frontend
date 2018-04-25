@@ -16,12 +16,10 @@ class Navbar extends Component {
 
     render() {
         const { isAuthenticated, user } = this.props.auth;
-
         return (
-            
             <div>
                {isAuthenticated &&
-                <nav className="navbar navbar-light">
+                <nav className="navbar navbar-light" style={{backgroundColor: "#6EC8C8"}}>
                     <a className="navbar-brand" href="#">Solution Library</a>
                    
                     <button onClick={this.onClickMe} className="transparent-btn">{user.username}</button>      
@@ -29,7 +27,6 @@ class Navbar extends Component {
 
                 }
             </div>
-            
         )
     }
 }

@@ -6,20 +6,6 @@ import { withRouter } from 'react-router-dom';
 
 export default function(ComposedComponent, roles){
     class AuthProtector extends Component {
-        /*componentWillMount(){
-            if(!this.props.isAuth){
-                this.props.history.push("/");
-                console.log("You cannot access this page. Try to log in first")
-            }
-        }
-
-        componentWillUpdate(nextProps, nextState) {
-            if(!nextProps.isAuth){
-                this.props.history.push("/");
-                console.log("You cannot access this page. Try to log in first")
-            }
-        }*/
-
         render() {
             const { role } = this.props.user;
             

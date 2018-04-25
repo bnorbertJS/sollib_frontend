@@ -59,7 +59,7 @@ class SolutionDetails extends Component {
         return (
 
             <div className="white" style={{ height: 100 + "vh" }}>
-                <nav className="navbar navbar-light red lighten-2">
+                <nav className="navbar navbar-light" style={{ backgroundColor: "#6EC8C8" }}>
                     <form className="form-inline my-2 my-lg-0">
                         <a style={{ cursor: "pointer" }} className="navbar-brand" onClick={this.onBack}>
                             <i className="material-icons">keyboard_arrow_left</i>
