@@ -14,6 +14,8 @@ class Admin extends Component {
       reportedSolutions: []
     }
 
+    this.onClickAcceptSolution = this.onClickAcceptSolution.bind(this);
+    this.onClickRejectSolution = this.onClickRejectSolution.bind(this);
     this.onClickDeleteUser = this.onClickDeleteUser.bind(this);
     this.onClickSearch = this.onClickSearch.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
@@ -22,6 +24,56 @@ class Admin extends Component {
 
   onSearchChange(e){
     this.setState({searchUser : e.target.value})
+  }
+
+  
+  componentWillMount() {
+    this.getReportedSolutions();
+  }
+  
+
+  getReportedSolutions(){
+    axios({
+      method: 'get',
+      url: '/api/v1/get_reported_solutions',
+      headers: {
+          'x-sollib-token': localStorage.getItem("x-sollib-token")
+      }
+    })
+    .then(sols => {
+      this.setState({reportedSolutions: sols.data.solutions})
+    })
+    .catch(err => {
+      
+    })
+  }
+
+  onClickAcceptSolution(e){
+    axios({
+      method: 'post',
+      url: '/api/v1/accept_solution/' + e.target.dataset.id,
+      headers: {
+          'x-sollib-token': localStorage.getItem("x-sollib-token")
+      }
+    })
+    .then(succ => {
+      const {solutions} = succ.data;
+      this.setState({
+        reportedSolutions: Array.isArray(solutions) ? solutions : [solutions]
+      })
+    })
+  }
+
+  onClickRejectSolution(e){
+    axios.delete("/api/v1/delete_reported_solution",{
+      data: {id: e.target.dataset.id}
+    })
+    .then(succ => {
+      const {solutions} = succ.data;
+      this.setState({
+        reportedSolutions: Array.isArray(solutions) ? solutions : [solutions]
+      })
+    })
   }
 
   onClickSearch(e){
@@ -41,8 +93,9 @@ class Admin extends Component {
   }
 
   onClickDeleteUser(){
+    const userId = this.state.searchedUser.id;
     axios.delete("/api/v1/delete_user",{
-      data: {id: "8043e8af-e973-4b20-a09c-8045a9ac7e10"}
+      data: {id: userId}
     })
     .then(succ => {
       this.setState({searchedUser: null, searchUser: ""});
@@ -65,22 +118,26 @@ class Admin extends Component {
   </thead>
   
   <tbody>
-    <tr style={{padding: 5 + "px"}}>
-      <td>solution #2</td>
-      <td>csitika</td>
-      <td>
-        <a className="btn-floating btn-small waves-effect waves-light green"><i className="material-icons">check</i></a>
-        <a className="btn-floating btn-small waves-effect waves-light red"><i className="material-icons">delete</i></a>
-      </td>
-    </tr>
-    <tr style={{padding: 5 + "px"}}>
-      <td>solution #2</td>
-      <td>csitika</td>
-      <td>
-        <a className="btn-floating btn-small waves-effect waves-light green"><i className="material-icons">check</i></a>
-        <a className="btn-floating btn-small waves-effect waves-light red"><i className="material-icons">delete</i></a>
-      </td>
-    </tr>
+    {
+      this.state.reportedSolutions.map(item => {
+        return (
+          <tr key={item.id} style={{padding: 5 + "px"}}>
+            <td>{item.name}</td>
+            <td>{item.user_id}</td>
+            <td>
+              <a style={{marginRight: 5 + "px"}} onClick={this.onClickAcceptSolution} 
+                className="btn-floating btn-small waves-effect waves-light green">
+                <i data-id={item.id} className="material-icons">check</i>
+              </a>
+              <a className="btn-floating btn-small waves-effect waves-light red" onClick={this.onClickRejectSolution} >
+                <i data-id={item.id} className="material-icons">delete</i>
+              </a>
+            </td>
+          </tr>
+        )
+      })
+    }
+    
   </tbody>
 </Table>
     </div>)
