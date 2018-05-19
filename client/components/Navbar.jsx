@@ -2,16 +2,24 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import { logout } from '../actions/LoginActions';
+import {NavItem, Button, Dropdown} from 'react-materialize';
 
 class Navbar extends Component {
     constructor(props) {
         super(props);
-
+        this.onClickLogoutNavbar = this.onClickLogoutNavbar.bind(this)
         this.onClickMe = this.onClickMe.bind(this);
     }
     
-    onClickMe(){
+    onClickMe(e){
+        e.preventDefault();
         this.props.history.push("/my_profile");
+    }
+
+    onClickLogoutNavbar(e){
+        e.preventDefault();
+        this.props.logout();
     }
 
     render() {
@@ -22,7 +30,13 @@ class Navbar extends Component {
                 <nav className="navbar navbar-light" style={{backgroundColor: "#6EC8C8"}}>
                     <a className="navbar-brand" href="#">Solution Library</a>
                    
-                    <button onClick={this.onClickMe} className="transparent-btn">{user.username}</button>      
+                    <Dropdown trigger={
+                        <a style={{cursor: "pointer"}}>{user.username}</a>
+                    }>
+                        <NavItem onClick={this.onClickMe}>Profile</NavItem>
+                        <NavItem divider />
+                        <NavItem onClick={this.onClickLogoutNavbar}>Logout</NavItem>
+                    </Dropdown>    
                 </nav>
 
                 }
@@ -32,9 +46,10 @@ class Navbar extends Component {
 }
 
 Navbar.propTypes = {
-    auth: PropTypes.object.isRequired
+    auth: PropTypes.object.isRequired,
+    logout: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = ( state ) => ({ auth: state.authReducer });
 
-export default withRouter(connect(mapStateToProps)(Navbar));
+export default withRouter(connect(mapStateToProps, { logout })(Navbar));

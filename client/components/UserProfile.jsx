@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { logout } from '../actions/LoginActions';
 import { userDetailRequest, addSolutionRequest } from '../actions/UserDetailAction';
-import {Chip} from 'react-materialize';
+import {Chip, NavItem, Button, Dropdown} from 'react-materialize';
 
 class UserProfile extends Component {
     constructor(props) {
@@ -19,6 +20,10 @@ class UserProfile extends Component {
         this.onClickAddSolution = this.onClickAddSolution.bind(this);
         this.onClickEditProfile = this.onClickEditProfile.bind(this);
         this.onClickSolutionDetails = this.onClickSolutionDetails.bind(this);
+    }
+
+    onBack() {
+        window.history.go(-1)
     }
 
     componentWillReceiveProps(nextProps) {
@@ -93,6 +98,20 @@ class UserProfile extends Component {
         const self_intro = this.state.user.self_intro ? (<div className="self-intro">{this.state.user.self_intro}</div>) : (<div></div>);
 
         return (
+            <div>
+            <nav className="navbar navbar-light" style={{backgroundColor: "#6EC8C8"}}>
+                <a style={{ cursor: "pointer" }} className="navbar-brand" onClick={this.onBack}>
+                    <i className="material-icons">keyboard_arrow_left</i>
+                </a>
+
+                <Dropdown trigger={
+                    <a style={{cursor: "pointer"}}>csitika</a>
+                }>
+                    <NavItem onClick={this.props.logout}>Logout</NavItem>
+                    <NavItem divider />
+                    <NavItem>Delete account</NavItem>
+                </Dropdown>  
+            </nav>
             <div className="userprofile">
             <div className="sollib-section" style={{marginBottom: 10 + "px", backgroundColor: "#6EC8C8"}}>
                 <a className="btn-floating btn-large red chat-icon" onClick={this.onClickMessages}>
@@ -151,6 +170,7 @@ class UserProfile extends Component {
                     </div>
                 </div> 
             </div>
+            </div>
         )
     }
 }
@@ -158,11 +178,12 @@ class UserProfile extends Component {
 UserProfile.propTypes = {
     userDetailRequest: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired,
-    addSolutionRequest: PropTypes.func.isRequired
+    addSolutionRequest: PropTypes.func.isRequired,
+    logout: PropTypes.func.isRequired
 }
 
 const mapStateToProps = ( state ) => ({
     user:  state.userDetailsReducer.user
 });
 
-export default connect(mapStateToProps,{ userDetailRequest, addSolutionRequest })(UserProfile);
+export default connect(mapStateToProps,{ userDetailRequest, addSolutionRequest, logout })(UserProfile);

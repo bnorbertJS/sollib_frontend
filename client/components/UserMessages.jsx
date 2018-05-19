@@ -34,6 +34,7 @@ class UserMessages extends Component {
             }
         })
         .then( contacts => {
+            debugger;
             this.setState({ contacts: contacts.data.contactList, isloading: false })
         })
     }

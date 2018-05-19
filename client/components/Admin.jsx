@@ -120,9 +120,10 @@ class Admin extends Component {
   <tbody>
     {
       this.state.reportedSolutions.map(item => {
+        const href = "/#/solution_details/" + item.id;
         return (
           <tr key={item.id} style={{padding: 5 + "px"}}>
-            <td>{item.name}</td>
+            <td><a href={href}>{item.name}</a></td>
             <td>{item.user_id}</td>
             <td>
               <a style={{marginRight: 5 + "px"}} onClick={this.onClickAcceptSolution} 

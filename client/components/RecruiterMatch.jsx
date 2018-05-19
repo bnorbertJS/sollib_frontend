@@ -105,7 +105,7 @@ class RecruiterMatch extends Component {
         )
 
         const tinderComponent = this.state.users !== null && this.state.users.length !== 0 ? (
-            <div>
+            <div style={{maxWidth: 570 + "px", minWidth: 340 + "px"}}>
                 <div>
                     <CardPanel className="white" style={{paddingBottom: 1 + "px", marginBottom: 0}}>
                         <Row>

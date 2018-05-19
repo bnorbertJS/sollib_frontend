@@ -29,3 +29,11 @@ export function userLoginRequest(userData){
     }
 };
 
+export function logout(){
+    return dispatch => {
+        localStorage.removeItem("sollib-username");
+        localStorage.removeItem("x-sollib-token");
+        dispatch(setLoggedInUser({}));
+    }
+};
+
