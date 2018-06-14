@@ -36,7 +36,7 @@ class Login extends Component {
                     <input name="authCred" className="form-control"
                         onChange={this.onChange}
                         value={this.state.authCred}
-                        placeholder="Enter username/email" />
+                        placeholder="Username/Email" />
                 </div>
                 <div className="form-group">
                     <input name="pass" type="password" className="form-control"
@@ -44,7 +44,18 @@ class Login extends Component {
                         value={this.state.pass}
                         placeholder="Password" />
                 </div>
-                <div className="row">
+                <div className="form-group">
+                    <button style={{width: 100 + "%", marginBottom: 2 + "px"}} type="submit" className="btn btn-success">Login</button>
+                    <button style={{width: 100 + "%"}}  onClick={this.onPressRegister.bind(this)} className="btn btn-primary">Sign up</button>
+                </div>
+            </form>
+        </div>
+    )
+    }
+}
+
+{/*
+<div className="row">
                     <div className="col">
                         <button type="submit" className="btn btn-success">Login</button>
                     </div>
@@ -52,11 +63,7 @@ class Login extends Component {
                         <button onClick={this.onPressRegister.bind(this)} className="btn btn-primary">Sign up</button>
                     </div>
                 </div>  
-            </form>
-        </div>
-    )
-    }
-}
+*/}
 
 Login.propTypes = {
     userLoginRequest: PropTypes.func.isRequired

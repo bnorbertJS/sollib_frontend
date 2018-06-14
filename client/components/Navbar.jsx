@@ -27,7 +27,7 @@ class Navbar extends Component {
         return (
             <div>
                {isAuthenticated &&
-                <nav className="navbar navbar-light" style={{backgroundColor: "#6EC8C8"}}>
+                <nav className="navbar navbar-light" style={{backgroundColor: "#32465A"}}>
                     <a className="navbar-brand" href="#">Solution Library</a>
                    
                     <Dropdown trigger={
