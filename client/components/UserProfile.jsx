@@ -59,11 +59,12 @@ class UserProfile extends Component {
         ) :
 
         (
-                <span style={{width: 280 + "px"}}>
+                <div className="container">
+                <div className="row">
                 {
                     this.props.user.solutions.map((item, idx) => {
                         return (
-                            <div key={idx} style={{width: 280 + "px", margin: 0}}>
+                            <div key={idx} className="col s12 m6 l3">
                             <div className="card small">
                                 <div className="card-image">
                                     <img src={"http://localhost:8000/" + item.pic_url}/>
@@ -83,7 +84,8 @@ class UserProfile extends Component {
                         )
                     })
                 }
-                </span>
+                </div>
+                </div>
         )
         const picUrl = this.state.user.profile_pic === undefined || this.state.user.profile_pic === null ? "user.png" : this.state.user.profile_pic
         const ProfilePicTemplate =
@@ -99,13 +101,13 @@ class UserProfile extends Component {
 
         return (
             <div>
-            <nav className="navbar navbar-light" style={{backgroundColor: "#6EC8C8"}}>
+            <nav className="navbar navbar-light" style={{backgroundColor: "#FFF"}}>
                 <a style={{ cursor: "pointer" }} className="navbar-brand" onClick={this.onBack}>
-                    <i className="material-icons">keyboard_arrow_left</i>
+                    <i className="material-icons" style={{color: "#000"}}>keyboard_arrow_left</i>
                 </a>
 
                 <Dropdown trigger={
-                    <a style={{cursor: "pointer"}}>csitika</a>
+                    <a style={{cursor: "pointer", color: "#000"}}>csitika</a>
                 }>
                     <NavItem onClick={this.props.logout}>Logout</NavItem>
                     <NavItem divider />
@@ -113,7 +115,7 @@ class UserProfile extends Component {
                 </Dropdown>  
             </nav>
             <div className="userprofile">
-            <div className="sollib-section" style={{marginBottom: 10 + "px", backgroundColor: "#6EC8C8"}}>
+            <div className="sollib-section opacitySection" style={{marginBottom: 10 + "px"}}>
                 <a className="btn-floating btn-large red chat-icon" onClick={this.onClickMessages}>
                     <i className="large material-icons">message</i>
                 </a>
@@ -137,17 +139,17 @@ class UserProfile extends Component {
                     </div>
                 </div>
                 </div>
-                <div className="sollib-section">
-                    <nav className="navbar navbar-light bg-light">
-                        <h3 style={{color: "black", fontSize: 32 + "px"}}>Self intro</h3>
+                <div className="sollib-section opacitySection">
+                    <nav className="navbar navbar-light sectionHeader">
+                        <h3 style={{fontSize: 32 + "px"}}>Self intro</h3>
                     </nav>
                     <div className="selfintro-box">
                     {self_intro}
                     </div>
                 </div>
-                <div className="sollib-section">
-                    <nav className="navbar navbar-light bg-light">
-                        <h3 style={{color: "black", fontSize: 32 + "px"}}>TechStack</h3>
+                <div className="sollib-section opacitySection">
+                    <nav className="navbar navbar-light sectionHeader">
+                        <h3 style={{fontSize: 32 + "px"}}>TechStack</h3>
                     </nav>
                     <div className="skills-box">
                         {this.state.user.skills &&
@@ -157,9 +159,9 @@ class UserProfile extends Component {
                         }
                     </div>
                 </div>
-                <div className="sollib-section">
-                    <nav className="navbar navbar-light bg-light">
-                        <h3 style={{color: "black", fontSize: 32 + "px"}}>Solutions</h3>
+                <div className="sollib-section opacitySection">
+                    <nav className="navbar navbar-light sectionHeader">
+                        <h3 style={{fontSize: 32 + "px"}}>Solutions</h3>
 
                         <form className="form-inline my-2 my-lg-0">
                             <button className="btn btn-outline-dark my-2 my-sm-0" onClick={this.onClickAddSolution}>Create</button>

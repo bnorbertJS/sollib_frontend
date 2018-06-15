@@ -19,12 +19,12 @@ class Header extends Component {
                 <Navbar />
                     <div className="jumbotron parallax">
                     <div className="container">
-                        <h1 className="display-4">Solution Library</h1>
+                        <h1 className="display-4" style={{color: "#FFF", fontWeight: "bold"}}>Solution Library</h1>
                     </div>
                     <div className="container">
                         <div className="row">
                             <div className="col-8">
-                                <p className="lead">Release your inner desire !</p>
+                                <p className="lead" style={{color: "#FFF"}}>Release your inner desire !</p>
                             </div>
                             {!isAuthenticated &&
                                 <div className="col-4">

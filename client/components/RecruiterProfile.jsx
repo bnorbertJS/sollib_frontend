@@ -25,18 +25,18 @@ class RecruiterProfile extends Component {
 
     render() {
         const buttonToggleNav = (
-            <Button style={{position: "absolute", right: 2 + "px", top: 2 + "px"}} 
-                large className='red lighten-2' icon='menu' />
+            <Button style={{position: "absolute", right: 2 + "px", top: 2 + "px", backgroundColor: "#FFFFFF", color: "#000"}} 
+                large icon='menu' />
         )
         
         return (
                 <div>
-                    <nav className="navbar red lighten-2">
+                    <nav className="navbar" style={{backgroundColor: "#FFF"}}>
                         <form className="form-inline my-2 my-lg-0">
                             <Icon>chevron_left</Icon>
                         </form>
 
-                        <form className="form-inline my-2 my-lg-0">
+                        <form className="form-inline my-2 my-lg-0" >
                             {buttonToggleNav}
                         </form>
                     </nav>

@@ -27,11 +27,11 @@ class Navbar extends Component {
         return (
             <div>
                {isAuthenticated &&
-                <nav className="navbar navbar-light" style={{backgroundColor: "#32465A"}}>
+                <nav className="navbar navbar-light" style={{backgroundColor: "#FFF"}}>
                     <a className="navbar-brand" href="#">Solution Library</a>
                    
                     <Dropdown trigger={
-                        <a style={{cursor: "pointer"}}>{user.username}</a>
+                        <a style={{cursor: "pointer", color: "#000"}}>{user.username}</a>
                     }>
                         <NavItem onClick={this.onClickMe}>Profile</NavItem>
                         <NavItem divider />

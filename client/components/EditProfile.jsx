@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import {Button, Row, Input, Icon, Tag, Chip, Col} from 'react-materialize';
+import {Button, Row, Input, Icon, Tag, Chip, Col, NavItem, Dropdown} from 'react-materialize';
 import {userDetailRequest} from '../actions/UserDetailAction';
+import { logout } from '../actions/LoginActions';
 
 class EditProfile extends Component {
     constructor(props) {
@@ -99,12 +100,30 @@ class EditProfile extends Component {
         }
     }
 
+    onBack() {
+        window.history.go(-1)
+    }
+
     render() {
         return (
-            <div className="editprofile-page">
+            <div>
+            <nav className="navbar navbar-light" style={{backgroundColor: "#FFF"}}>
+                <a style={{ cursor: "pointer" }} className="navbar-brand" onClick={this.onBack}>
+                    <i className="material-icons" style={{color: "#000"}}>keyboard_arrow_left</i>
+                </a>
+
+                <Dropdown trigger={
+                    <a style={{cursor: "pointer", color: "#000"}}>csitika</a>
+                }>
+                    <NavItem onClick={this.props.logout}>Logout</NavItem>
+                    <NavItem divider />
+                    <NavItem>Delete account</NavItem>
+                </Dropdown>  
+            </nav>
+            <div className="editprofile-page opacitySectionHigh" style={{height: 100 + "%"}}>
                 <div className="d-flex justify-content-center">
-                    <div className="mx-auto d-block" style={{fontSize: 2 + 'em', color: 'grey'}}>
-                        Update your profile !
+                    <div className="mx-auto d-block" style={{fontSize: 2 + 'em', color: 'grey', marginTop: 10 + "px"}}>
+                        Update your profile!
                     </div>
                 </div>
                 
@@ -172,7 +191,7 @@ class EditProfile extends Component {
                         <Col s={6} style={{padding: 10 + "px"}}>
                             {this.state.skills &&
                                 this.state.skills.map((skill,idx) =>{
-                                    return <Tag key={idx}>{skill.name}</Tag>
+                                    return <Tag className="skillTag" key={idx}>{skill.name}</Tag>
                                 })
                             }
                         </Col>
@@ -187,17 +206,18 @@ class EditProfile extends Component {
                 </div>
                 </div>
                 </div>
-            
+            </div>
         )
     }
 }
 
 EditProfile.propTypes = {
     userDetailRequest: PropTypes.func.isRequired,
-    user: PropTypes.object.isRequired
+    user: PropTypes.object.isRequired,
+    logout: PropTypes.func.isRequired
 }
 
 const mapStateToProps = ( state ) => ({ user: state.userDetailsReducer.user });
 
 
-export default connect(mapStateToProps, { userDetailRequest })(EditProfile)
+export default connect(mapStateToProps, { userDetailRequest, logout })(EditProfile)

@@ -34,7 +34,6 @@ class UserMessages extends Component {
             }
         })
         .then( contacts => {
-            debugger;
             this.setState({ contacts: contacts.data.contactList, isloading: false })
         })
     }
@@ -96,15 +95,17 @@ class UserMessages extends Component {
     
     render() {
         const favListComponent = (
-            <div className="sollib-box">
-                <Collection header="Contacts" className="chat-list">
-                <div style={{height: 84 + "vh", overflowY: "auto"}}>
+            <div className="sollib-box" style={{height: 100 + "vh", overflowY: "auto", margin: 0, backgroundColor: "#2c3e50"}}>
+             <div className="favListHeader">Contacts</div>
+                <ul className="chat-list">
+                <div>
+                   
                 {
                     this.state.contacts.map((contact, idx) => {
                     return (
                         <CollectionItem className="contact-item"
                             onClick={this.onClickChatPartner} key={idx}
-                            style={{padding: 0, border: "none", cursor: "pointer"}}>
+                            style={{padding: 0, border: "none", cursor: "pointer", backgroundColor: "#2c3e50", color: "#FFF"}}>
                             <Row className="valign-wrapper left-aligned">
                                 <Col s={3} data-username={contact.username}>
                                     <img style={{height: 2 + "rem", width: 2 + "rem"}} 
@@ -122,14 +123,14 @@ class UserMessages extends Component {
                 })
                 }
                 </div>
-                </Collection>
+                </ul>
             </div>
         )
 
         return (
             <div>
-                <Row>
-                    <Col s={4}>
+                <Row style={{marginBottom: 0}}>
+                    <div className="favlist-container">
                     {
                         !this.state.isloading ?
                             favListComponent
@@ -142,24 +143,24 @@ class UserMessages extends Component {
                             </div>
                         )
                     }
-                    </Col>
-                    <Col s={8}>
+                    </div>
+                    <div className="chatContainer">
                         {
                             !this.state.selectedFav ?
                                 <div style={{marginTop: 30 + "vh"}} className="center-align">
                                     <div>
                                         <i className="large material-icons" style={{color: '#b2ebf2'}}>info_outline</i>
                                     </div>
-                                    <div >
+                                    <div style={{color: "#FFF"}}>
                                         Select someone from the left, and send messages to them.
                                     </div>
                                 </div>
                             :
                                 this.state.selectedFavObj !== null ?
-                                <div className="sollib-box">
-                                    <Collection className="chat-messages"
-                                        header={this.state.selectedFavObj.firstname}>
-                                        <div id="chat-body" style={{height: 70 + "vh", overflowY: "auto"}}>
+                                <div className="sollib-box" style={{height: 100 + "vh", overflowY: "hidden", margin: 0}}>
+                                    <div className="favListHeader">{this.state.selectedFavObj.firstname}</div>
+                                    <ul className="chat-messages">
+                                        <div id="chat-body">
                                             {
                                             this.state.currentMessages.map((msg, idx) => {
                                                     
@@ -167,13 +168,13 @@ class UserMessages extends Component {
                                                 <CollectionItem key={idx}
                                                     style={{border: "none"}}>
                                                     <div
-                                                    className={"chatmessage-bubble " + (this.props.user.id === msg.from ? "goto-right" : "")}>
+                                                    className={"teal accent-4 chatmessage-bubble " + (this.props.user.id === msg.from ? "goto-right" : "")}>
                                                         <span>
                                                             {msg.text}
                                                         </span>
                                                         <br />
-                                                        <span style={{fontSize: 12 + "px"}}>
-                                                            {msg.created_at}
+                                                        <span className="goto-right-msg" style={{fontSize: 12 + "px", marginTop: 5 + "px"}}>
+                                                            {msg.created_at.split("T")[1].split(":")[0] + ":" + msg.created_at.split("T")[1].split(":")[1]}
                                                         </span>
                                                     </div>
                                                 </CollectionItem>
@@ -181,22 +182,22 @@ class UserMessages extends Component {
                                                 })
                                             }
                                         </div>
-                                        <CollectionItem>
-                                            <div className="align-center messageinput-button">
-                                             <Row className="align-center" style={{padding: 0, margin: 0}}>
-                                                <Col s={10} style={{padding: 0, margin: 0}}>
-                                                <textarea  onChange={this.onChangeMessageText} value={this.state.messageText}
-                                                    style={{resize: "none", padding: 0, margin: 0, height: 100 + "%"}} 
-                                                    rows="2" placeholder="Type a message ..."/>
-                                                </Col>
-                                                <Col s={2} style={{padding: 0, margin: 0}}>
-                                                    <Button style={{height: 100 + "%", width: 100 + "%", padding: 0, margin: 0}}
-                                                        className="red darken-1" onClick={this.onSendMessageToUser}>Send</Button>
-                                                </Col>
-                                            </Row>
+                                    </ul>
+                                    
+                                            <div className="messageinput-button" style={{width: 100 + "%"}}>
+                                                <Row style={{padding: 0, margin: 0}}>
+                                                    <Col s={10} style={{padding: 0, margin: 0}}>
+                                                    <textarea  className="form-control" onChange={this.onChangeMessageText} value={this.state.messageText}
+                                                        style={{resize: "none", padding: 0, margin: 0, height: 100 + "%"}} 
+                                                        rows="2" placeholder="Type a message ..."/>
+                                                    </Col>
+                                                    <Col s={2} style={{padding: 0, margin: 0}}>
+                                                        <Button style={{height: 100 + "%", width: 100 + "%", padding: 0, margin: 0}}
+                                                            className="teal accent-4" onClick={this.onSendMessageToUser}>Send</Button>
+                                                    </Col>
+                                                </Row>
                                             </div>
-                                        </CollectionItem>
-                                    </Collection>
+                                        
                                     </div>
                             :
                             
@@ -208,7 +209,7 @@ class UserMessages extends Component {
                             
                         }
                         
-                    </Col>
+                    </div>
                 </Row>
             </div>
         )
