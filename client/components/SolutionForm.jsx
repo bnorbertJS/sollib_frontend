@@ -9,6 +9,7 @@ class SolutionForm extends Component {
         this.state = {
             name: "",
             desc: "",
+            github: "",
             images: []
         }
         this.onChange = this.onChange.bind(this);
@@ -47,7 +48,7 @@ class SolutionForm extends Component {
     onPressCreateSolution(e){
         e.preventDefault();
         //this.props.history.push("/my_profile")
-        this.props.addSolutionRequest({name: this.state.name, desc: this.state.desc})
+        this.props.addSolutionRequest({name: this.state.name, desc: this.state.desc, github: this.state.github})
         .then((data) => {
             const { id } = data.data.success;
             
@@ -61,9 +62,8 @@ class SolutionForm extends Component {
   render() {
     return (
         <div className="register-form">
-        <div className="d-flex justify-content-center">
-            <div className="mx-auto d-block">
-            <div className="col col-lg-12">
+        <div style={{margin: 20 + "px"}}>  
+            <div>
                 <div className="form-group">
                     <input name="name" className="form-control"
                         onChange={this.onChange}
@@ -76,7 +76,12 @@ class SolutionForm extends Component {
                         value={this.state.desc}
                         placeholder="Enter description" />
                 </div>
-                
+                <div className="form-group">
+                    <input name="github" className="form-control"
+                        onChange={this.onChange}
+                        value={this.state.github}
+                        placeholder="Enter github repository" />
+                </div>
                 <div className="file-field input-field">
                     
                         <input name="solutionImg" type="file" multiple onChange={this.onAddImages.bind(this)}/>
@@ -88,7 +93,7 @@ class SolutionForm extends Component {
 
                 <button onClick={this.onPressCreateSolution.bind(this)} className="btn btn-primary">Create</button>
                 </div>
-            </div>
+            
         </div>
     </div>
     )

@@ -104,11 +104,14 @@ class UserMessages extends Component {
                     this.state.contacts.map((contact, idx) => {
                     return (
                         <CollectionItem className="contact-item"
+                            data-username={contact.username}
                             onClick={this.onClickChatPartner} key={idx}
                             style={{padding: 0, border: "none", cursor: "pointer", backgroundColor: "#2c3e50", color: "#FFF"}}>
-                            <Row className="valign-wrapper left-aligned">
+                            <Row className="valign-wrapper left-aligned" data-username={contact.username}>
                                 <Col s={3} data-username={contact.username}>
-                                    <img style={{height: 2 + "rem", width: 2 + "rem"}} 
+                                    <img
+                                        data-username={contact.username}
+                                        style={{height: 2 + "rem", width: 2 + "rem"}} 
                                         src={contact.profile_pic ? 
                                                     `http://localhost:8000/${contact.profile_pic}`
                                                     : "http://localhost:8000/user.png"} alt="avatar" className="circle" />
@@ -163,7 +166,6 @@ class UserMessages extends Component {
                                         <div id="chat-body">
                                             {
                                             this.state.currentMessages.map((msg, idx) => {
-                                                    
                                             return (
                                                 <CollectionItem key={idx}
                                                     style={{border: "none"}}>

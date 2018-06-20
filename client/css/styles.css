@@ -13,8 +13,35 @@ background-size: cover;
 background-position: center;
 }
 
+li{
+    margin-left: 0;
+    margin-right: 0;
+}
+
 .opacitySection{
     background-color: rgba(255,255,255,0.8);
+}
+
+.searchCandidates{
+    height: 100%;
+    padding-bottom: 10px;
+    background-color: #FFF;
+    margin-top: 10px;
+}
+
+.recChatHeight{
+    height: calc(100vh - 57px);
+}
+
+.register-page{
+    background-color: rgba(255,255,255,0.8);
+    margin-left: 10%;
+    margin-right: 10%;
+    height: 100vh;
+}
+
+.adminSection{
+    background-color: #FFFFFF;
 }
 
 .opacitySectionHigh{
@@ -84,6 +111,13 @@ background-position: center;
     color: white;
     background-color: #6EC8C8;
     font-size: 20px;
+}
+
+.skill-tag-smaller{
+    color: white;
+    background-color: #6EC8C8;
+    font-size: 14px;
+    margin-top: 2px;
 }
 
 .solution-toolbar-icon-delete{

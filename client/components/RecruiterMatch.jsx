@@ -84,7 +84,7 @@ class RecruiterMatch extends Component {
 
     render() {
         const cantFindUsers = (
-            <div>Oh noo :( We couldnt find users that is a match</div>
+            <div style={{color: "#FFF"}}>Oh noo :( We couldnt find users that is a match</div>
         )
 
         const searchSkillsProvided = (
@@ -173,7 +173,7 @@ class RecruiterMatch extends Component {
         return (
             <div style={{marginTop: 10 + "px"}}>
                 <Row>
-                    <Col s={4}>
+                    <Col s={4} style={{minWidth: 195 + "px", color: "#FFF"}}>
                         <Row className="center-align">
                             <Input label="What skills do you look for?" validate
                                 onChange={this.onChangeSearchInput} 
@@ -191,7 +191,7 @@ class RecruiterMatch extends Component {
                     <Col s={8}>
                         <div className="container center-align">
                         {
-                            this.state.users === null ? <div>Press the search button to start matching with candidates</div> 
+                            this.state.users === null ? <div style={{color: "#FFF"}}>Press the search button to start matching with candidates</div> 
                                                       : this.state.users.length === 0 ? cantFindUsers 
                                                       : tinderComponent
                                 

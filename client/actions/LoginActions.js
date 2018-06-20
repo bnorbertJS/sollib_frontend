@@ -29,6 +29,18 @@ export function userLoginRequest(userData){
     }
 };
 
+export function deleteAccount(who){
+    return dispatch => {
+        axios.delete("/api/v1/delete_user",{
+            data: {id: who}
+        }).then(succ => {
+            
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+}
+
 export function logout(){
     return dispatch => {
         localStorage.removeItem("sollib-username");

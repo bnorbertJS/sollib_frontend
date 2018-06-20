@@ -11,11 +11,14 @@ class Admin extends Component {
     this.state = {
       searchUser: "",
       searchedUser: null,
-      reportedSolutions: []
+      reportedSolutions: [],
+      recruiterProblems: []
     }
 
     this.onClickAcceptSolution = this.onClickAcceptSolution.bind(this);
     this.onClickRejectSolution = this.onClickRejectSolution.bind(this);
+    this.onClickAcceptRec = this.onClickAcceptRec.bind(this);
+    this.onClickRejectRec = this.onClickRejectRec.bind(this);
     this.onClickDeleteUser = this.onClickDeleteUser.bind(this);
     this.onClickSearch = this.onClickSearch.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
@@ -29,8 +32,25 @@ class Admin extends Component {
   
   componentWillMount() {
     this.getReportedSolutions();
+    this.getRegProblems();
   }
   
+  getRegProblems(){
+    // /api/v1/get_reg_problems
+      axios({
+        method: 'get',
+        url: '/api/v1/get_reg_problems',
+        headers: {
+            'x-sollib-token': localStorage.getItem("x-sollib-token")
+        }
+      })
+      .then(recs => {
+        this.setState({recruiterProblems: recs.data.recruiters})
+      })
+      .catch(err => {
+        
+      })
+  }
 
   getReportedSolutions(){
     axios({
@@ -45,6 +65,43 @@ class Admin extends Component {
     })
     .catch(err => {
       
+    })
+  }
+
+  onClickAcceptRec(e){
+    // /api/v1/accept_reg_recruiter/:id
+    axios({
+      method: 'post',
+      url: '/api/v1/accept_reg_recruiter/' + e.target.dataset.id,
+      headers: {
+          'x-sollib-token': localStorage.getItem("x-sollib-token")
+      }
+    })
+    .then(succ => {
+      const {recruiters} = succ.data;
+      debugger;
+      this.setState({
+        recruiterProblems: Array.isArray(recruiters) ? recruiters : [recruiters]
+      })
+    })
+  }
+
+  onClickRejectRec(e){
+    debugger;
+    axios({
+      method: 'post',
+      url: '/api/v1/delete_reg_recruiter',
+      data: {id: e.target.dataset.id},
+      headers: {
+          'x-sollib-token': localStorage.getItem("x-sollib-token")
+      }
+    })
+    .then(succ => {
+      const {recruiters} = succ.data;
+      debugger;
+      this.setState({
+        recruiterProblems: Array.isArray(recruiters) ? recruiters : [recruiters]
+      })
     })
   }
 
@@ -104,6 +161,44 @@ class Admin extends Component {
 
   onBack() {
     window.history.go(-1)
+  }
+
+  renderListRecruiters(){
+    return (<div>
+      <Table className="centered" centered striped hoverable>
+  <thead>
+    <tr>
+      <th data-field="solution" style={{fontWeight: "bold"}}>Name</th>
+      <th data-field="uploader" style={{fontWeight: "bold"}}>Email</th>
+      <th data-field="uploader" style={{fontWeight: "bold"}}>VAT</th>
+      <th data-field="actions" style={{fontWeight: "bold"}}>Actions</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+    {
+      this.state.recruiterProblems.map(item => {
+        return (
+          <tr key={item.id} style={{padding: 5 + "px"}}>
+            <td>{`${item.firstname} ${item.lastname}`}</td>
+            <td>{item.email}</td>
+            <td>{item.wat}</td>
+            <td>
+              <a style={{marginRight: 5 + "px"}} onClick={this.onClickAcceptRec}
+                className="btn-floating btn-small waves-effect waves-light green">
+                <i data-id={item.id} className="material-icons">check</i>
+              </a>
+              <a className="btn-floating btn-small waves-effect waves-light red" onClick={this.onClickRejectRec} >
+                <i data-id={item.id} className="material-icons">delete</i>
+              </a>
+            </td>
+          </tr>
+        )
+      })
+    }
+  </tbody>
+</Table>
+    </div>)
   }
 
   renderListSolutons(){
@@ -188,10 +283,12 @@ class Admin extends Component {
     
     const notFoundUserCard = (<div className="center-align" style={{margin: 10 + "px"}}>User not found</div>);
     const noReportedSolutions = (<div className="center-align" style={{margin: 10 + "px"}}>0 reported solutions yet.</div>)
+    const noRegProblems = (<div className="center-align" style={{margin: 10 + "px"}}>0 registration problems yet.</div>)
+    const noInactiveUser = (<div className="center-align" style={{margin: 10 + "px"}}>There aren't any inactive users in the system.</div>)
 
     return (
       <div>
-        <nav className="navbar navbar-light" style={{ backgroundColor: "#6EC8C8" }}>
+        <nav className="navbar navbar-light" style={{ backgroundColor: "#FFFFFF", color: "black" }}>
             <form className="form-inline my-2 my-lg-0">
                 <a style={{ cursor: "pointer" }} className="navbar-brand" onClick={this.onBack}>
                     <i className="material-icons">keyboard_arrow_left</i>
@@ -199,7 +296,7 @@ class Admin extends Component {
             </form>
         </nav>
       <div style={{margin: 10 + "px"}}>
-        <div className="sollib-section">
+        <div className="sollib-section adminSection">
               <div className="sollib-section-header">
                 <p>Reported solutions</p>
                 <hr />
@@ -211,17 +308,19 @@ class Admin extends Component {
               </div>
         </div>
 
-        <div className="sollib-section">
+        <div className="sollib-section adminSection">
               <div className="sollib-section-header">
                 <p>Inactive users</p>
                 <hr />
               </div>
               <div className="selfintro-box">
-              sec box
+                  {
+                    noInactiveUser
+                  }
               </div>
         </div>
 
-        <div className="sollib-section">
+        <div className="sollib-section adminSection">
               <div className="sollib-section-header">
                 <p>Search for users</p>
                 <hr />
@@ -234,7 +333,7 @@ class Admin extends Component {
                   <Button waves='light' onClick={this.onClickSearch}>Search</Button>
                 </div>
               </div>
-              <div className="sollib-section-result">
+              <div className="sollib-section-result" style={{padding: 5 + "px"}}>
                 {
                  this.state.searchedUser === null 
                   ? <div></div> 
@@ -243,13 +342,15 @@ class Admin extends Component {
               </div>
         </div>
 
-        <div className="sollib-section">
+        <div className="sollib-section adminSection">
               <div className="sollib-section-header">
                 <p>Registration problems</p>
                 <hr />
               </div>
               <div className="selfintro-box">
-              fourth box
+              {
+                  this.state.recruiterProblems.length <= 0 ? noRegProblems : this.renderListRecruiters()
+                }
               </div>
         </div>
       </div>

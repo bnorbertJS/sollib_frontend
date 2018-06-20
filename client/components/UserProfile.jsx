@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { logout } from '../actions/LoginActions';
+import { logout, deleteAccount} from '../actions/LoginActions';
 import { userDetailRequest, addSolutionRequest } from '../actions/UserDetailAction';
 import {Chip, NavItem, Button, Dropdown} from 'react-materialize';
 
@@ -46,6 +46,11 @@ class UserProfile extends Component {
         this.props.history.push("/user_messages");
     }
 
+    onClickDeleteAccount(){
+        this.props.deleteAccount(this.state.user.id)
+        this.props.logout();
+    }
+
     render() {
         const solutionExists = this.state.solutionsLength === 0 ? false : true;
 
@@ -75,7 +80,7 @@ class UserProfile extends Component {
                                 <p>{item.desc}</p>
                                 </div>
                                 <div className="card-action">
-                                    <a href="#">Github</a>
+                                    <a href={item.github}>Repository</a>
                                     <a style={{cursor: "pointer"}}
                                         onClick={this.onClickSolutionDetails} data-id={item.id}>Details</a>
                                 </div>
@@ -111,7 +116,7 @@ class UserProfile extends Component {
                 }>
                     <NavItem onClick={this.props.logout}>Logout</NavItem>
                     <NavItem divider />
-                    <NavItem>Delete account</NavItem>
+                    <NavItem onClick={this.onClickDeleteAccount.bind(this)}>Delete account</NavItem>
                 </Dropdown>  
             </nav>
             <div className="userprofile">
@@ -181,11 +186,12 @@ UserProfile.propTypes = {
     userDetailRequest: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired,
     addSolutionRequest: PropTypes.func.isRequired,
-    logout: PropTypes.func.isRequired
+    logout: PropTypes.func.isRequired,
+    deleteAccount: PropTypes.func.isRequired
 }
 
 const mapStateToProps = ( state ) => ({
     user:  state.userDetailsReducer.user
 });
 
-export default connect(mapStateToProps,{ userDetailRequest, addSolutionRequest, logout })(UserProfile);
+export default connect(mapStateToProps,{ userDetailRequest, addSolutionRequest, logout, deleteAccount})(UserProfile);

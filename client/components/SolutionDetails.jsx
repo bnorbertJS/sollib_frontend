@@ -90,10 +90,10 @@ class SolutionDetails extends Component {
             </div>
         );
         const SolutonTemplate = (
-            <div className="white" style={{ height: 100 + "vh" }}>
-                <nav className="navbar navbar-light" style={{ backgroundColor: "#6EC8C8" }}>
+            <div className="white" style={{ height: 100 + "%" }}>
+                <nav className="navbar navbar-light" style={{ backgroundColor: "#FFFFFF" }}>
                     <form className="form-inline my-2 my-lg-0">
-                        <a style={{ cursor: "pointer" }} className="navbar-brand" onClick={this.onBack}>
+                        <a style={{ cursor: "pointer", color: "black"}} className="navbar-brand" onClick={this.onBack}>
                             <i className="material-icons">keyboard_arrow_left</i>
                         </a>
                     </form>

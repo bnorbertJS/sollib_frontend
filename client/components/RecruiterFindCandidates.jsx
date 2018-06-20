@@ -13,6 +13,7 @@ export default class RecruiterFindCandidates extends Component {
         }
 
         this.onSearchChange = this.onSearchChange.bind(this);
+        this.onClickSolutionItem = this.onClickSolutionItem.bind(this);
     }
 
     componentWillMount(){
@@ -24,8 +25,7 @@ export default class RecruiterFindCandidates extends Component {
 
     onClickSolutionItem(e){
         e.preventDefault();
-
-        debugger;
+        this.props.history.push("/solution_details/" + e.target.dataset.id);
     }
 
     getUsers(){
@@ -50,25 +50,36 @@ export default class RecruiterFindCandidates extends Component {
         return (
             userIterate.map((user, idx) => {
                 return (
-                    <CollapsibleItem key={idx} header={user.username} icon='filter_drama'>
-                        <Badge>{user.solutions.length} Solutions</Badge>
+                    <CollapsibleItem key={idx} header={user.username} icon='person_outline'>
+                        <Badge>{user.solutions.length} solution</Badge>
                         <div className="section">
-                            <p>{user.self_intro}</p>
+                                <h6>Self introduction</h6>
+                                <div className="divider"></div>
+                                <p>{user.self_intro}</p>
                         </div>
-                        <div className="divider"></div>
+                        
                         <div className="section">
-                            <p>skills here</p>
+                            <h6>Skills</h6>
+                                <div className="divider"></div>
+                            {
+                                user.skills.map((item,idx) =>{
+                                    return <span className="chip skill-tag-smaller" key={idx}>{item.name}</span>
+                                })
+                            }
                         </div>
-                        <div className="divider"></div>
+                        
                         <div className="section">
+                            <h6>Solutions</h6>
+                            <div className="divider"></div>
                             {
                             user.solutions.map((solution,idx) => {
                                 return (
-                                    <img className="responsive-img circle" key={idx}
-                                        style={{cursor: "pointer", height: 150 + "px", width: 150 + "px"}}
-                                        src={`http://localhost:8000/${solution.pic_url}`}
-                                        onClick={this.onClickSolutionItem}
-                                        />
+                                        <img className="responsive-img circle" key={idx}
+                                            style={{cursor: "pointer", height: 150 + "px", width: 150 + "px"}}
+                                            data-id={solution.id}
+                                            src={`http://localhost:8000/${solution.pic_url}`}
+                                            onClick={this.onClickSolutionItem}
+                                            />
                                 )
                             })
                             }
@@ -81,13 +92,13 @@ export default class RecruiterFindCandidates extends Component {
 
     render() {
         return (
-            <div className="container" style={{paddingTop: 10 + "%"}}>
+            <div className="container searchCandidates">
                 <Row className="valign-wrapper">
                     <Input s={6} label="Search for candidates..." validate onChange={this.onSearchChange}><Icon>search</Icon></Input>
                 </Row>
                 {
                     !this.state.isLoading ? (
-                        <Collapsible popout style={{whiteSpace: "pre-wrap"}}>
+                        <Collapsible popout style={{whiteSpace: "pre-wrap", backgroundColor: "#FFF"}}>
                         {
                             this.renderList(this.state.users.filter(user => {
                                 return user.username.toLowerCase().indexOf(this.state.searchValue.toLocaleLowerCase()) !== -1 ||
