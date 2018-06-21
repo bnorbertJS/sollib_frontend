@@ -13,7 +13,8 @@ class SignupFormCompany extends Component {
             company: "",
             wat: "",
             pass: "",
-            pass_match: ""
+            pass_match: "",
+            country: ""
         }
 
         this.onChange = this.onChange.bind(this);
@@ -26,6 +27,10 @@ class SignupFormCompany extends Component {
     onPressCreateAccount(e){
         e.preventDefault();
         this.props.recruiterSignupRequest(this.state).then((data) => this.props.history.push("/"));
+    }
+
+    selectCountry (val) {
+        this.setState({ country: val });
     }
     
 
@@ -68,14 +73,18 @@ class SignupFormCompany extends Component {
                                         placeholder="Enter company name" />
                                 </div>
                             </div>
-                            <div className="col s6">
-                                <div className="form-group">
+                        </div>
+                        
+
+
+
+
+
+                        <div className="form-group">
                                     <input name="wat" className="form-control"
                                         onChange={this.onChange}
                                         value={this.state.wat}
                                         placeholder="Enter WAT number" />
-                                </div>
-                            </div>
                         </div>
                         <div className="form-group">
                             <input name="email" type="email" className="form-control"
